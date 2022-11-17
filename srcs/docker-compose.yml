@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-   nginx:
+  nginx:
     build: 
       - ./requirements/nginx
     image:
@@ -20,6 +20,48 @@ services:
       wordpress
     volumes:
       wp_volume:/var/www/
+  wordpress:
+    build:
+      - ./requirements/wordpress
+    image:
+      wordpress
+    container_name:
+      wordpress
+    ports:
+      - "9000:9000"
+    restart:
+      always
+    networks:
+      - inception
+    environnement:
+      - ./env
+    volumes:
+      wp_volumes:/var/www
+    depends_on:
+      mariadb
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      args:
+        - WP_DB_NAME=${WP_DB_NAME}
+        - MYSQL_ROOT_USR=${MYSQL_ROOT_USR}
+        - MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD}
+        - MYSQL_USR=${MYSQL_USR}
+        - MYSQL_USR_PWD=${MYSQL_USR_PWD}
+    image:
+      mariadb
+    container_name:
+      mariadb
+    ports:
+      - "3306:3306"
+    restart:
+      always
+    networks:
+      inception
+    environnement:
+      - ./env
+    volumes:
+      db_volumes:/var/lib/mysql
 
 networks:
   inception:
@@ -31,4 +73,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/lfilloux/data/wp'
+      device: '/home/lfilloux/data/wordpress'
+  db_local:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/lfilloux/data/mariadb'
