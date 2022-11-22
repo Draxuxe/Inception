@@ -6,13 +6,15 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/11/22 12:52:46 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/11/22 13:24:45 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= inception
 
 all:
+	@mkdir -p /home/lfilloux/data/mariadb
+	@mkdir -p /home/lfilloux/data/wordpress
 	@docker-compose -f srcs/docker-compose.yml up --build -d
 
 down:
