@@ -5,40 +5,40 @@ services:
     build: 
       - ./requirements/nginx
     image:
-      nginx
+      - nginx
     container_name:
-      nginx
+      - nginx
     ports: 
       - "443:443"
     restart:
-      always
+      - always
     networks:
       - inception
     environnement:
       - ./.env
     depends_on:
-      wordpress
+      - wordpress
     volumes:
-      wp_volume:/var/www/
+      - wp_volume:/var/www/
   wordpress:
     build:
       - ./requirements/wordpress
     image:
-      wordpress
+      - wordpress
     container_name:
-      wordpress
+      - wordpress
     ports:
       - "9000:9000"
     restart:
-      always
+      - always
     networks:
       - inception
     environnement:
       - ./.env
     volumes:
-      wp_volumes:/var/www
+      - wp_volumes:/var/www
     depends_on:
-      mariadb
+      - mariadb
   mariadb:
     build:
       - ./requirements/mariadb
@@ -49,13 +49,13 @@ services:
     ports:
       - "3306:3306"
     restart:
-      always
+      - always
     networks:
-      inception
+      - inception
     environnement:
       - ./.env
     volumes:
-      db_volumes:/var/lib/mysql
+      - db_volumes:/var/lib/mysql
 
 networks:
   inception:
