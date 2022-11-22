@@ -14,7 +14,8 @@ services:
       - ./.env
     depends_on:
       - wordpress
-    volumes: wp_volume:/var/www/
+    volumes: 
+      - wp_volume:/var/www/
   wordpress:
     build: ./requirements/wordpress
     image: wordpress
@@ -26,7 +27,8 @@ services:
       - inception
     environment:
       - ./.env
-    volumes: wp_volumes:/var/www
+    volumes: 
+      - wp_volumes:/var/www
     depends_on:
       - mariadb
   mariadb:
@@ -40,7 +42,8 @@ services:
       - inception
     environment:
       - ./.env
-    volumes: db_volumes:/var/lib/mysql
+    volumes:
+      - db_volumes:/var/lib/mysql
 
 networks:
   inception:
