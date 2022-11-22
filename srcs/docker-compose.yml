@@ -15,7 +15,7 @@ services:
     networks:
       - inception
     environnement:
-      - ./env
+      - ./.env
     depends_on:
       wordpress
     volumes:
@@ -34,20 +34,14 @@ services:
     networks:
       - inception
     environnement:
-      - ./env
+      - ./.env
     volumes:
       wp_volumes:/var/www
     depends_on:
       mariadb
   mariadb:
     build:
-      context: ./requirements/mariadb
-      args:
-        - WP_DB_NAME=${WP_DB_NAME}
-        - MYSQL_ROOT_USR=${MYSQL_ROOT_USR}
-        - MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD}
-        - MYSQL_USR=${MYSQL_USR}
-        - MYSQL_USR_PWD=${MYSQL_USR_PWD}
+      - ./requirements/mariadb
     image:
       mariadb
     container_name:
@@ -59,7 +53,7 @@ services:
     networks:
       inception
     environnement:
-      - ./env
+      - ./.env
     volumes:
       db_volumes:/var/lib/mysql
 

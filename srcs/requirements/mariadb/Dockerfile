@@ -4,9 +4,9 @@ RUN apt-get update -y \
 &&  apt-get upgrade -y \
 &&  apt-get install mariadb-server -y
 
-COPY ./tools/setup.sh /setup.sh
-COPY ./tools/wordpress.sql /wordpress.sql
-COPY ./tools/50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY ./conf/setup.sh /setup.sh
+COPY ./conf/wordpress.sql /wordpress.sql
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 RUN chmod 777 /setup.sh
 
