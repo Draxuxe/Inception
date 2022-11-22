@@ -3,7 +3,7 @@ version: '3.3'
 services:
   nginx:
     build: 
-      - ./requirements/nginx
+      - './requirements/nginx'
     image:
       - nginx
     container_name:
@@ -19,10 +19,10 @@ services:
     depends_on:
       - wordpress
     volumes:
-      - wp_volume:/var/www/
+      - 'wp_volume:/var/www/'
   wordpress:
     build:
-      - ./requirements/wordpress
+      - './requirements/wordpress'
     image:
       - wordpress
     container_name:
@@ -36,12 +36,12 @@ services:
     environment:
       - ./.env
     volumes:
-      - wp_volumes:/var/www
+      - 'wp_volumes:/var/www'
     depends_on:
       - mariadb
   mariadb:
     build:
-      - ./requirements/mariadb
+      - './requirements/mariadb'
     image:
       mariadb
     container_name:
@@ -55,7 +55,7 @@ services:
     environment:
       - ./.env
     volumes:
-      - db_volumes:/var/lib/mysql
+      - 'db_volumes:/var/lib/mysql'
 
 networks:
   inception:
