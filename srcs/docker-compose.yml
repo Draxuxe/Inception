@@ -14,7 +14,7 @@ services:
       - always
     networks:
       - inception
-    environnement:
+    environment:
       - ./.env
     depends_on:
       - wordpress
@@ -33,7 +33,7 @@ services:
       - always
     networks:
       - inception
-    environnement:
+    environment:
       - ./.env
     volumes:
       - wp_volumes:/var/www
@@ -52,7 +52,7 @@ services:
       - always
     networks:
       - inception
-    environnement:
+    environment:
       - ./.env
     volumes:
       - db_volumes:/var/lib/mysql
