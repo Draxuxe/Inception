@@ -15,7 +15,7 @@ services:
     depends_on:
       - wordpress
     volumes: 
-      - wp_volume:/var/www/
+      - wp_vol:/var/www/
   wordpress:
     build: ./requirements/wordpress
     image: wordpress
@@ -28,7 +28,7 @@ services:
     environment:
       - ./.env
     volumes: 
-      - wp_volumes:/var/www
+      - wp_vol:/var/www
     depends_on:
       - mariadb
   mariadb:
@@ -43,7 +43,7 @@ services:
     environment:
       - ./.env
     volumes:
-      - db_volumes:/var/lib/mysql
+      - db_vol:/var/lib/mysql
 
 networks:
   inception:
@@ -56,7 +56,7 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/lfilloux/data/wordpress'
-  db_local:
+  db_vol:
     driver: local
     driver_opts:
       type: 'none'
