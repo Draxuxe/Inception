@@ -21,4 +21,4 @@ ENV MYSQL_USR=${MYSQL_USR}
 
 EXPOSE 3306
 
-CMD ["./setup.sh"]
+CMD ["/var/www/setup.sh"]
