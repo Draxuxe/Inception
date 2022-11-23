@@ -6,13 +6,13 @@
 	mkdir -p /run/php/;
 	touch /run/php/php7.3-fpm.pid;
 
-if [ ! -f /var/www/html/wp-config.php ]; then
+if [ ! -f /var/www/html/wp_config.php ]; then
 	echo "Wordpress: setting up..."
 	mkdir -p /var/www/html
 	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar;
 	chmod +x wp-cli.phar; 
 	mv wp-cli.phar /usr/local/bin/wp;
-	cd /var/www/html;
+	cd /var/www;
 	wp core download --allow-root;
 	mv /var/www/wp-config.php /var/www/html/
 	echo "Wordpress: creating users..."
