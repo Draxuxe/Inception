@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3'
 
 services:
   nginx:
@@ -6,11 +6,11 @@ services:
     image: nginx
     container_name: nginx
     ports: 
-      - "443:443"
-    restart: always
+      - 443:443
+    restart: on-failure
     networks:
       - inception
-    environment:
+    env_file:
       - ./.env
     depends_on:
       - wordpress
@@ -21,11 +21,11 @@ services:
     image: wordpress
     container_name: wordpress
     ports:
-      - "9000:9000"
-    restart: always
+      - 9000
+    restart: unless-stopped
     networks:
       - inception
-    environment:
+    env_file:
       - ./.env
     volumes: 
       - wp_vol:/var/www
@@ -36,11 +36,11 @@ services:
     image: mariadb
     container_name: mariadb
     ports:
-      - "3306:3306"
-    restart: always
+      - 3306
+    restart: unless-stopped
     networks:
       - inception
-    environment:
+    env_file:
       - ./.env
     volumes:
       - db_vol:/var/lib/mysql
