@@ -32,7 +32,7 @@ GRANT ALL PRIVILEGES ON $WP_DB_NAME.* TO '$MYSQL_USR'@'%';
 FLUSH PRIVILEGES;
 EOF
 	# run init.sql
-	/usr/bin/mysqld --user=mysql --bootstrap < $tfile
+	/var/lib/mysqld --user=mysql --bootstrap < $tfile
 	rm -f $tfile
 fi
 
