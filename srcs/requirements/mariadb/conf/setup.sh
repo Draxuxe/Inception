@@ -1,3 +1,5 @@
+#!/bin/bash
+
 service mysql start
 
 mysql -u root -e "CREATE USER '${MYSQL_USR}'@'%' IDENTIFIED BY '${MYSQL_PWD}';"
