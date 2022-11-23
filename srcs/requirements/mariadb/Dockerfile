@@ -2,7 +2,8 @@ FROM debian:buster
 
 RUN apt-get update -y \
 &&  apt-get upgrade -y \
-&&  apt-get install mariadb-client -y
+&&  apt-get install mariadb -y \
+&&  apt§get install mariadb-client -y
 
 COPY ./conf/setup.sh /tmp/setup.sh
 
