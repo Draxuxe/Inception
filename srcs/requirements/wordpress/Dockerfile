@@ -2,16 +2,28 @@ FROM debian:buster
 
 RUN apt-get update -y \
 &&  apt-get upgrade -y \
-&&  apt-get install -y php7.3 php-mysqli php-fpm wget
+&&  apt-get -y install php7.3\
+	php-fpm\
+	php-mysql\
+	mariadb-client\
+	wget\
+	curl
 
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
-COPY ./conf/wp_start.sh /var/www/wp_start.sh
-COPY ./conf/wp-config.php /var/www/wp-config.php
+RUN		wget https://wordpress.org/wordpress-5.9.2.tar.gz -P /var/www
+RUN		cd /var/www &&\
+		tar -xvf wordpress-5.9.2.tar.gz &&\
+		rm wordpress-5.9.2.tar.gz
 
-RUN chmod +x /var/www/wp_start.sh
+COPY	./conf/www.conf			/etc/php/7.3/fpm/pool.d
+
+RUN		chown -R root:root /var/www/wordpress
+
+RUN		curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar &&\
+		chmod +x wp-cli.phar &&\
+		mv wp-cli.phar /usr/local/bin/wp
 
 EXPOSE 9000
 
-ENTRYPOINT ["/var/www/wp_start.sh"]
+COPY ./conf/wp_start.sh /
 
-CMD ["/usr/sbin/php-fpm7.3"]
+ENTRYPOINT ["bash", "wp_start.sh"]
