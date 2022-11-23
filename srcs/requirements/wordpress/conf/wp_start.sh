@@ -14,7 +14,7 @@ if [ ! -f /var/www/html/wp_config.php ]; then
 	mv wp-cli.phar /usr/local/bin/wp;
 	cd /var/www;
 	wp core download --allow-root;
-	mv /var/www/wp-config.php /var/www/html/
+	mv /var/www/wp_config.php /var/www/html/
 	echo "Wordpress: creating users..."
 	wp core install --allow-root --url=${DOMAIN_NAME} --title="Wordpress" --admin_user=${MYSQL_ROOT_USR} --admin_password=${MYSQL_ROOT_PWD} --admin_email=${EMAIL}
 	wp user create --allow-root ${MYSQL_USR} ${USR_EMAIL} --user_pass=${MYSQL_USR_PWD};
