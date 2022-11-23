@@ -2,23 +2,12 @@ FROM debian:buster
 
 RUN apt-get update -y \
 &&  apt-get upgrade -y \
-&&  apt-get install mariadb-server -y
+&&  apt-get install mariadb mariadb-client -y
 
-COPY ./conf/setup.sh /var/www/setup.sh
-COPY ./conf/wordpress.sql /var/www/wordpress.sql
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY ./conf/setup.sh /tmp/setup.sh
 
-RUN chmod 777 /var/www/setup.sh
-
-ENV WP_DB_NAME=${WP_DB_NAME}
-ENV MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD}
-ENV MYSQL_USR_PWD=${MYSQL_USR_PWD}
-ENV MYSQL_USR=${MYSQL_USR}
-
-ARG MYSQL_ROOT_PWD
-ARG MYSQL_USR_PWD
-ARG MYSQL_USR
+RUN chmod 777 /tmpsetup.sh
 
 EXPOSE 3306
 
-CMD ["/var/www/setup.sh"]
+ENTRYPOINT ["sh", "/tmp/setup.sh"]
