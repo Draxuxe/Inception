@@ -6,7 +6,7 @@ RUN apt-get update -y \
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 COPY ./conf/wp_start.sh /var/www/wp_start.sh
-COPY ./conf/wp_config.php /var/www/wp_config.php
+COPY ./conf/wp-config.php /var/www/wp-config.php
 
 RUN chmod +x /var/www/wp_start.sh
 
