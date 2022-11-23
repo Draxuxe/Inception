@@ -8,7 +8,7 @@ COPY ./conf/setup.sh /var/www/setup.sh
 COPY ./conf/wordpress.sql /var/www/wordpress.sql
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
-RUN chmod 777 /setup.sh
+RUN chmod 777 /var/www/setup.sh
 
 ARG MYSQL_ROOT_PWD
 ARG MYSQL_USR_PWD
