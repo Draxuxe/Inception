@@ -6,7 +6,7 @@ RUN apt-get update -y \
 
 COPY ./conf/setup.sh /tmp/setup.sh
 
-RUN chmod 777 /tmpsetup.sh
+RUN chmod 777 /tmp/setup.sh
 
 EXPOSE 3306
 
