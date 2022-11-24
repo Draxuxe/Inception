@@ -8,9 +8,7 @@ RUN	openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
 	-subj "/C=FR/ST=France/L=Lyon/O=School42/CN=lfilloux.42.fr" \
 	-keyout /etc/ssl/private/lfilloux.key -out /etc/ssl/certs/lfilloux.crt
 
-RUN chmod 777 /etc/ssl/certs/lfilloux.crt /etc/ssl/private/lfilloux.key
-
-COPY ./conf/conf /etc/nginx/sites-available/default
+COPY ./conf/conf /etc/nginx/conf.d
 
 EXPOSE 443
 
