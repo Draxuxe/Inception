@@ -1,19 +1,19 @@
 #!bin/bash
 cd /var/www/wordpress
-wp core config	--dbhost=$DB_HOST \
+wp core config	--dbhost="mariadb" \
 				--dbname=$DB_NAME \
-				--dbuser=$DB_USER \
-				--dbpass=$DB_PASSWORD \
+				--dbuser=$MYSQL_USR \
+				--dbpass=$MYSQL_PWD \
 				--allow-root
 
-wp core install --title=$WP_TITLE \
-				--admin_user=$WP_ADMIN_USER \
-				--admin_password=$WP_ADMIN_PASSWORD \
-				--admin_email=$WP_ADMIN_MAIL \
-				--url=$WP_URL \
+wp core install --title="First ever Wordpress!" \
+				--admin_user=$MYSQL_ROOT_USR \
+				--admin_password=$MYSQL_ROOT_PWD \
+				--admin_email=$ROOT_EMAIL \
+				--url=$DOMAINE_NAME \
 				--allow-root
 
-wp user create $WP_USER $WP_USER_MAIL --role=author --user_pass=$WP_USER_PASSWORD --allow-root
+wp user create $MYSQL_USR $USR_EMAIL --role=author --user_pass=$MYSQL_USR_PWD --allow-root
 cd -
 
 # run php-fpm7.3 listening for CGI request

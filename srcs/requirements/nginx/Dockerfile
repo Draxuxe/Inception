@@ -1,14 +1,15 @@
 FROM debian:buster
 
 RUN apt-get update -y \
-&& apt-get upgrade -y \
-&&  apt-get install -y nginx openssl
+&&	apt-get upgrade -y \
+&& 	apt-get install -y nginx openssl \
+&&	rm -rf /var/lib/apt/lists/*
 
-RUN	openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
-	-subj "/C=FR/ST=France/L=Lyon/O=School42/CN=lfilloux.42.fr" \
-	-keyout /etc/ssl/private/lfilloux.key -out /etc/ssl/certs/lfilloux.crt
+COPY ./conf/conf /etc/nginx/sites-available/default
 
-COPY ./conf/conf /etc/nginx/conf.d
+RUN	openssl req -x509 -days 365 -nodes -newkey rsa:4096 \
+	-keyout /etc/ssl/private/nginx.key \
+	-out /etc/ssl/certs/nginx.crt -sha256 -subj "/CN=lfilloux.42.fr"
 
 EXPOSE 443
 
