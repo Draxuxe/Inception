@@ -1,22 +1,21 @@
-FROM debian:buster
+FROM		debian:buster
 
-RUN apt-get update
-RUN apt-get install -y mariadb-server \
-    mariadb-client \
-    vim \
-    && rm -rf /var/lib/apt/lists/*
+COPY		./conf/setup.sh		    /tmp/
+COPY		./conf/50-server.cnf 	/tmp/
+COPY		./conf/wordpress.sql	/tmp/
 
-RUN mkdir -p /var/run/mysqld \
-&& chown -R mysql:mysql /var/run/mysqld \
-&& chmod 777 /var/run/mysqld
+RUN			apt-get update
+RUN			apt-get install -y \
+			mariadb-server \
+			mariadb-client \
+			dumb-init
 
-EXPOSE 3306
+RUN			chmod 111 /tmp/setup.sh
+RUN			mv ./tmp/50-server.cnf /etc/mysql/50-server.cnf
+RUN			chmod 0444 /etc/mysql/50-server.cnf
 
-COPY ./conf/setup.sh /usr/local/bin/
-COPY ./conf/wordpress.sql /usr/local/bin/
-RUN chmod +x /usr/local/bin/setup.sh
-RUN chmod +x /usr/local/bin/wordpress.sql
+ENTRYPOINT	["/usr/bin/dumb-init"]
 
-ENTRYPOINT [ "/usr/local/bin/setup.sh" ]
+EXPOSE		3306
 
-CMD ["mysqld", "--bind-address=0.0.0.0"]
+CMD			["/tmp/setup.sh"]

@@ -1,21 +1,19 @@
-FROM debian:buster
+FROM   debian:buster
 
-RUN apt-get update -y \
-&&	apt-get upgrade -y \
-&& 	apt-get install -y nginx openssl \
+RUN    apt-get update
+RUN    apt-get install -y \
+       dumb-init \
+       nginx \
+       openssl
 
-RUN mkdir /etc/nginx/ssl
+RUN         openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
+            -subj "/C=KR/ST=Korea/L=Seoul/O=Seoul42/CN=lfilloux.42.fr" \
+            -keyout /etc/ssl/private/lfilloux.key -out /etc/ssl/certs/lfilloux.crt
 
-RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-       -out /etc/nginx/ssl/lfilloux.crt \
-       -keyout /etc/nginx/ssl/lfilloux.key \
-       -subj "/C=FR/ST=Lyon/L=Paris/O=42 School/OU=lfilloux/CN=lfilloux/"
+COPY        ./conf/nginx.conf       /etc/nginx/nginx.conf
 
-COPY ./conf/nginx.conf /etc/nginx/conf.d
+ENTRYPOINT  ["/usr/bin/dumb-init"]
 
-RUN mkdir -p /run/nginx
+EXPOSE      443
 
-EXPOSE 443
-
-#daemon off = se lance en priorite
-CMD ["nginx", "-g", "daemon off;"]
+CMD         ["nginx", "-g", "daemon off;"]

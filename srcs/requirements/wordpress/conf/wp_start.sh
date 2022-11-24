@@ -1,45 +1,19 @@
-#!bin/bash
-#!/bin/sh
+#!bin/bash/
 
-#check if wp-config.php exist
-if [ -f ./wp-config.php ]
-then
-	echo "wordpress already downloaded"
-else
+#	Download wordpress compressed file, decompress it,
+#	move the dir to the right emplacement and delete .tar file
+mv wordpress/ /var/www/
+rm latest.tar.gz
 
-####### MANDATORY PART ##########
+mv /tmp/wp-config.php /var/www/wordpress
+chown -R www-data:www-data /var/www/wordpress/
 
-	#Download wordpress and all config file
-	wget http://wordpress.org/latest.tar.gz
-	tar xfz latest.tar.gz
-	mv wordpress/* .
-	rm -rf latest.tar.gz
-	rm -rf wordpress
+#	Set up daemonize to 'no' in the php-fpm.conf so i can run it properly after
 
-	#Inport env variables in the config file
-	sed -i "s/username_here/$MYSQL_USR/g" wp-config-sample.php
-	sed -i "s/password_here/$MYSQL_USR_PWD/g" wp-config-sample.php
-	sed -i "s/localhost/$MYSQL_HOST/g" wp-config-sample.php
-	sed -i "s/database_name_here/$MYSQL_DB/g" wp-config-sample.php
-	cp wp-config-sample.php wp-config.php
-###################################
+sed -i -e "s|MYSQL_DATABASE|'$MYSQL_DB'|g" /var/www/wordpress/wp-config.php
+sed -i -e "s|MYSQL_USER|'$MYSQL_USR'|g" /var/www/wordpress/wp-config.php
+sed -i -e "s|MYSQL_PASSWORD|'$MYSQL_USR_PWD'|g" /var/www/wordpress/wp-config.php
+sed -i -e "s|;daemonize = yes|daemonize = no|g" /etc/php/7.3/fpm/php-fpm.conf
+mkdir -p /run/php/
 
-####### BONUS PART ################
-
-## redis ##
-
-	wp config set WP_REDIS_HOST redis --allow-root #I put --allowroot because i am on the root user on my VM
-  	wp config set WP_REDIS_PORT 6379 --raw --allow-root
- 	wp config set WP_CACHE_KEY_SALT $DOMAIN_NAME --allow-root
-  	#wp config set WP_REDIS_PASSWORD $REDIS_PASSWORD --allow-root
- 	wp config set WP_REDIS_CLIENT phpredis --allow-root
-	wp plugin install redis-cache --activate --allow-root
-    wp plugin update --all --allow-root
-	wp redis enable --allow-root
-
-###  end of redis part  ###
-
-###################################
-fi
-
-exec "$@"
+exec /usr/sbin/php-fpm7.3
