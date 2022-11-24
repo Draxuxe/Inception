@@ -7,7 +7,8 @@ RUN apt-get update -y \
 RUN	openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
 	-subj "/C=FR/ST=France/L=Lyon/O=School42/CN=lfilloux.42.fr" \
 	-keyout /etc/ssl/private/lfilloux.key -out /etc/ssl/certs/lfilloux.crt
-    chmod 777 /etc/ssl/certs/lfilloux.crt /etc/ssl/private/lfilloux.key
+
+RUN chmod 777 /etc/ssl/certs/lfilloux.crt /etc/ssl/private/lfilloux.key
 
 COPY ./conf/conf /etc/nginx/sites-available/default
 
