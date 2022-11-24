@@ -23,7 +23,7 @@ COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
 
 RUN mkdir /run/php
 
-COPY ./tools/wp_start.sh /usr/local/bin/
+COPY ./conf/wp_start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wp_start.sh
 ENTRYPOINT ["/usr/local/bin/wp_start.sh"]
 
