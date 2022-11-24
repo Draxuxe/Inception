@@ -1,20 +1,45 @@
 #!bin/bash
-cd /var/www/wordpress
-wp core config	--dbhost="mariadb" \
-				--dbname=$DB_NAME \
-				--dbuser=$MYSQL_USR \
-				--dbpass=$MYSQL_PWD \
-				--allow-root
+#!/bin/sh
 
-wp core install --title="First ever Wordpress!" \
-				--admin_user=$MYSQL_ROOT_USR \
-				--admin_password=$MYSQL_ROOT_PWD \
-				--admin_email=$ROOT_EMAIL \
-				--url=$DOMAINE_NAME \
-				--allow-root
+#check if wp-config.php exist
+if [ -f ./wp-config.php ]
+then
+	echo "wordpress already downloaded"
+else
 
-wp user create $MYSQL_USR $USR_EMAIL --role=author --user_pass=$MYSQL_USR_PWD --allow-root
-cd -
+####### MANDATORY PART ##########
 
-# run php-fpm7.3 listening for CGI request
-php-fpm7.3 -F
+	#Download wordpress and all config file
+	wget http://wordpress.org/latest.tar.gz
+	tar xfz latest.tar.gz
+	mv wordpress/* .
+	rm -rf latest.tar.gz
+	rm -rf wordpress
+
+	#Inport env variables in the config file
+	sed -i "s/username_here/$MYSQL_USR/g" wp-config-sample.php
+	sed -i "s/password_here/$MYSQL_USR_PWD/g" wp-config-sample.php
+	sed -i "s/localhost/$MYSQL_HOST/g" wp-config-sample.php
+	sed -i "s/database_name_here/$MYSQL_DB/g" wp-config-sample.php
+	cp wp-config-sample.php wp-config.php
+###################################
+
+####### BONUS PART ################
+
+## redis ##
+
+	wp config set WP_REDIS_HOST redis --allow-root #I put --allowroot because i am on the root user on my VM
+  	wp config set WP_REDIS_PORT 6379 --raw --allow-root
+ 	wp config set WP_CACHE_KEY_SALT $DOMAIN_NAME --allow-root
+  	#wp config set WP_REDIS_PASSWORD $REDIS_PASSWORD --allow-root
+ 	wp config set WP_REDIS_CLIENT phpredis --allow-root
+	wp plugin install redis-cache --activate --allow-root
+    wp plugin update --all --allow-root
+	wp redis enable --allow-root
+
+###  end of redis part  ###
+
+###################################
+fi
+
+exec "$@"
