@@ -9,6 +9,6 @@ RUN apt-get update -y \
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d
 COPY ./conf/setup.sh /setup.sh
 
-RUN chmod 777 /tmp/setup.sh
+RUN chmod 777 /setup.sh
 
 ENTRYPOINT ["bash", "setup.sh"]
