@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt-get update -y \
 &&  apt-get upgrade -y \
-&&  apt-get install wget php-cli php-mysql php-curl php-gd php-intl php-fpm
+&&  apt-get -y install wget php-cli php-mysql php-curl php-gd php-intl php-fpm
 
 RUN cd /var/www \
 &&  wget http://fr.wordpress.org/latest-fr_FR.tar.gz \
