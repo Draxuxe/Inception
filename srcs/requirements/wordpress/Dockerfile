@@ -7,7 +7,7 @@ RUN apt-get update -y \
 	php-mysql\
     wget
 
-RUN		wget https://wordpress.org/laatest.tar.gz
+RUN		wget https://wordpress.org/laatest.tar.gz \
 		tar -xvf latest.tar.gz &&\
 		rm latest.tar.gz
 
