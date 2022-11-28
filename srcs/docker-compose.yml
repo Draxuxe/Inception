@@ -20,7 +20,7 @@ services:
     networks:
       - inception
     env_file:
-      - ./env
+      - ./.env
     volumes:
       - mdb_vol:/var/lib/mysql
 
