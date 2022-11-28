@@ -39,7 +39,7 @@ services:
     depends_on:
       - wordpress
     volumes:
-      - wp_vol:/war/www
+      - wp_vol:/var/www
 
 networks:
   inception:
