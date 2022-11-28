@@ -10,7 +10,28 @@ services:
     restart: on-failure
     networks:
       - inception
+  mariabd:
+    build: ./requirements/mariadb
+    image: mariadb
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    restart: on-failure
+    networks:
+      - inception
+    env-file:
+      - ./env
+    volumes:
+      - mdb_vol:/var/lib/mysql
 
 networks:
   inception:
     driver: bridge
+
+volumes:
+  mdb_vol:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lfilloux/data/mariadb
