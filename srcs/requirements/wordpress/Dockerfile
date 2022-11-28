@@ -1,8 +1,8 @@
 FROM debian:buster
 
-RUN apt-get update \
-&&  apt-get upgrade \
-&&  apt-get install php \
-                    php-mysql \
-                    curl \
-                    tar
+RUN apt-get update -y \
+&&  apt-get upgrade -y \
+&&  apt-get install php -y \
+                    php-mysql -y \
+                    curl -y \
+                    tar -y
