@@ -10,27 +10,7 @@ services:
     restart: on-failure
     networks:
       - inception
-    env_file:
-      - ./.env
-    depends_on:
-      - wordpress
-    volumes: 
-      - wp_vol:/var/www/
 
 networks:
   inception:
     driver: bridge
-
-volumes:
-  wp_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/lfilloux/data/wordpress
-  db_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/lfilloux/data/mariadb
