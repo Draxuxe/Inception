@@ -5,8 +5,7 @@ RUN apt-get update -y \
 &&  apt-get -y install php7.3\
 	php-fpm\
 	php-mysql\
-    wget\
-    tar
+    wget
 
 RUN		wget https://wordpress.org/laatest.tar.gz
 		tar -xzvf latest.tar.gz &&\
