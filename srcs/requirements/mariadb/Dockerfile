@@ -7,6 +7,8 @@ RUN apt-get update -y \
 COPY /conf/setup.sh /setup.sh
 COPY /conf/my.cnf /etc/mysql/my.cnf
 
+EXPOSE 3306
+
 RUN chmod 777 /setup.sh
 
 CMD ["bash", "setup.sh"]
