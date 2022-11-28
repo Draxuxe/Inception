@@ -12,9 +12,7 @@ RUN apt-get update -y \
 RUN		wget http://wordpress.org/latest.tar.gz -P /var/www/html
 RUN		cd /var/www/html &&\
         tar xfz latest.tar.gz &&\
-        mv wordpress/* ./ &&\
-		rm -f latest.tar.gz &&\
-        rm index.html
+		rm -f latest.tar.gz
 
 COPY	./conf/www.conf			/etc/php/7.3/fpm/pool.d
 
