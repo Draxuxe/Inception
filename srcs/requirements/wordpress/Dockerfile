@@ -6,7 +6,7 @@ RUN apt-get update -y \
 	php-fpm\
 	php-mysql\
     wget\
-	curl
+    tar
 
 RUN		wget https://wordpress.org/laatest.tar.gz
 		tar -xzvf latest.tar.gz &&\
