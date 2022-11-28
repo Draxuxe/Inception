@@ -1,15 +1,6 @@
 version: '3'
 
 services:
-  nginx:
-    build: ./requirements/nginx
-    image: nginx
-    container_name: nginx
-    ports: 
-      - 443:443
-    restart: on-failure
-    networks:
-      - inception
   mariabd:
     build: ./requirements/mariadb
     image: mariadb
@@ -23,6 +14,32 @@ services:
       - ./.env
     volumes:
       - mdb_vol:/var/lib/mysql
+  wordpress:
+    buil: ./requirements/wordpress
+    image: wordpress
+    container_name: wordpress
+    ports:
+      - 9000:9000
+    restart: on-failure
+    env_file:
+      - ./.env
+    depends_on:
+      - mariadb
+    volumes:
+      - wp_vol:/var/www
+  nginx:
+    build: ./requirements/nginx
+    image: nginx
+    container_name: nginx
+    ports: 
+      - 443:443
+    restart: on-failure
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    volumes:
+      - wp_vol:/war/www
 
 networks:
   inception:
@@ -35,3 +52,9 @@ volumes:
       type: none
       o: bind
       device: /home/lfilloux/data/mariadb
+  mdb_vol:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lfilloux/data/wordpress
