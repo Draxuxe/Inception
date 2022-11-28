@@ -52,7 +52,7 @@ volumes:
       type: none
       o: bind
       device: /home/lfilloux/data/mariadb
-  mdb_vol:
+  wp_vol:
     driver: local
     driver_opts:
       type: none
