@@ -8,7 +8,7 @@ RUN apt-get update -y \
     wget
 
 RUN		wget https://wordpress.org/laatest.tar.gz
-		tar -xzvf latest.tar.gz &&\
+		tar -xvf latest.tar.gz &&\
 		rm latest.tar.gz
 
 COPY	./conf/www.conf			/etc/php/7.3/fpm/pool.d
