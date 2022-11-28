@@ -8,10 +8,9 @@ RUN apt-get update -y \
     wget\
 	curl
 
-RUN		wget https://wordpress.org/wordpress-5.9.2.tar.gz -P /var/www
-RUN		cd /var/www &&\
-		tar -xvf wordpress-5.9.2.tar.gz &&\
-		rm wordpress-5.9.2.tar.gz
+RUN		wget https://wordpress.org/laatest.tar.gz
+		tar -xzvf latest.tar.gz &&\
+		rm latest.tar.gz
 
 COPY	./conf/www.conf			/etc/php/7.3/fpm/pool.d
 
