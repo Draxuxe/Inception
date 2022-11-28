@@ -16,7 +16,7 @@ services:
     container_name: mariadb
     ports:
       - 3306:3306
-    restart: on-failure
+    restart: always
     networks:
       - inception
     env_file:
