@@ -15,7 +15,7 @@ services:
     volumes:
       - mdb_vol:/var/lib/mysql
   wordpress:
-    buil: ./requirements/wordpress
+    build: ./requirements/wordpress
     image: wordpress
     container_name: wordpress
     ports:
