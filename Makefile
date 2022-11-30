@@ -6,7 +6,7 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/11/30 10:39:09 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/11/30 10:47:57 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ down:
 	@docker-compose -f srcs/docker-compose.yml down
 
 clean: down
+	@docker stop $$(docker ps -q)
 	@docker rmi $$(docker images -q);
 	@docker system prune -f
 
