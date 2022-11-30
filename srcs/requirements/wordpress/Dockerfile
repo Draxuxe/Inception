@@ -1,11 +1,15 @@
 FROM debian:buster
 
-RUN apt update; \
-    apt install -y php7.3 php-mysqli php-fpm mariadb-client curl sendmail
+RUN apt-get update
+RUN apt-get -y install php7.3 php-mysqli php-fpm wget sendmail
+
+EXPOSE 9000
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 COPY ./conf /var/www/
 
-EXPOSE 9000
+RUN chmod +x /var/www/setup.sh
 
-CMD ["bash", "/var/www/setup.sh"]
+ENTRYPOINT [ "/var/www/setup.sh" ]
+
+CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]

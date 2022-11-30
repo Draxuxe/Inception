@@ -1,15 +1,15 @@
 FROM debian:buster
 
-RUN apt-get update \
-&&  apt-get install -y nginx openssl
-
-RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-	-keyout /etc/ssl/private/lfilloux.key \
-	-out /etc/ssl/certs/lfilloux.crt \
-	-subj "/C=FR/ST=France/L=Lyon/O=School42/CN=lfilloux"
-
-COPY ./conf/default /etc/nginx/sites-enabled/default
+RUN apt-get update
+RUN apt-get install -y nginx openssl
 
 EXPOSE 443
+
+COPY ./conf/default /etc/nginx/sites-enabled/default
+COPY ./tools/nginx_start.sh /var/www
+
+RUN chmod +x /var/www/nginx_start.sh
+
+ENTRYPOINT [ "var/www/nginx_start.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]
