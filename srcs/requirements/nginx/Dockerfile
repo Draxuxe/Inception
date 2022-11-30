@@ -1,15 +1,25 @@
 FROM debian:buster
 
-RUN apt-get update
-RUN apt-get install -y nginx openssl
+RUN		apt-get update\
+&&		apt-get upgrade\
+&&      apt-get install nginx openssl
 
-EXPOSE 443
+RUN		mkdir -p /var/www/html/
 
-COPY ./conf/default /etc/nginx/sites-enabled/default
-COPY ./conf/nginx_start.sh /var/www
+COPY	conf/default.conf /etc/nginx/http.d/default.conf
 
-RUN chmod +x /var/www/nginx_start.sh
+RUN		mkdir -p /etc/nginx/ssl
 
-ENTRYPOINT [ "var/www/nginx_start.sh" ]
+RUN		openssl req \
+		-newkey rsa:4096 \
+		-x509 \
+		-sha256 \
+		-days 365 \
+		-nodes \
+		-subj "/C=FR/ST=RHONE/L=Lyon/O=42/OU=lfilloux/CN=localhost" \
+		-keyout /etc/nginx/ssl/inception.key \
+		-out /etc/nginx/ssl/inception.cert
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE	443
+
+CMD		["nginx", "-g", "daemon off;"]
