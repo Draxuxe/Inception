@@ -6,7 +6,7 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/11/30 14:04:09 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/11/30 14:11:43 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,9 @@ clean: down
 	@docker rmi nginx
 	@docker rmi mariadb
 	@docker rmi wordpress
+	@docker volume rm $(docker volume ls -q)
 	@docker system prune -f
+	@sudo rm -rf /home/bcaffere/
 
 info:
 	@echo "=============================== IMAGES ==============================="
