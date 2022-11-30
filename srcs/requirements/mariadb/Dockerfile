@@ -5,7 +5,7 @@ RUN		apt-get update\
 &&      apt-get install mariadb\
                         mariadb-common\
                         mariadb-client\
-                        mariadb-server-utils\
+                        mariadb-server-utils
 
 RUN			rm -f	/etc/mysql/my.cnf \
 					/etc/my.cnf \

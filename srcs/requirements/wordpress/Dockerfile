@@ -1,7 +1,7 @@
 FROM	debian:buster
 
 RUN		apt-get update \
-&&		apk upgrade
+&&		apt-get upgrade
 
 RUN		apt-get install php7 \
 				php7-fpm \
