@@ -6,6 +6,6 @@ RUN apt-get update -y \
 
 RUN wget http://wordpress.org/latest.tar.gz \
 &&  tar -xvf latest.tar.gz \
-&&  sudo rm latest.tar.gz
+&&  rm latest.tar.gz
 
 COPY ./conf/wp-config.php /var/www/html/wordpress
