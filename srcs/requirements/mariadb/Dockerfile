@@ -2,10 +2,9 @@ FROM		debian:buster
 
 RUN		apt-get update\
 &&		apt-get upgrade\
-&&      apt-get install mariadb\
+&&      apt-get install mariadb-server\
                         mariadb-common\
-                        mariadb-client\
-                        mariadb-server-utils
+                        mariadb-client
 
 RUN			rm -f	/etc/mysql/my.cnf \
 					/etc/my.cnf \
