@@ -3,7 +3,7 @@ FROM	debian:buster
 RUN		apt-get update \
 &&		apt-get upgrade
 
-RUN		apt-get install php7 \
+RUN		apt-get install -y php7 \
 				php7-fpm \
 				php7-opcache \
 				php7-mysqli \

@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN		apt-get update\
 &&		apt-get upgrade\
-&&      apt-get install nginx openssl
+&&      apt-get install -y nginx openssl
 
 RUN		mkdir -p /var/www/html/
 
