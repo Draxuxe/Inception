@@ -6,7 +6,7 @@ RUN		apt-get update\
 
 RUN		mkdir -p /var/www/html/
 
-COPY	conf/default.conf /etc/nginx/http.d/default.conf
+COPY	conf/default /etc/nginx/http.d/default.conf
 
 RUN		mkdir -p /etc/nginx/ssl
 

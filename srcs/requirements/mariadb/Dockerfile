@@ -20,9 +20,9 @@ RUN			mkdir -p /var/lib/mysql
 RUN			chown -R mysql /var/lib/mysql
 RUN			chmod 777 /var/lib/mysql
 
-COPY		conf/entrypoint.sh entrypoint.sh
-RUN			chmod +x entrypoint.sh
+COPY		conf/db_setup.sh db_setup.sh
+RUN			chmod +x db_setup.sh
 
 EXPOSE		3306
 
-ENTRYPOINT	["./entrypoint.sh"]
+ENTRYPOINT	["./db_setup.sh"]
