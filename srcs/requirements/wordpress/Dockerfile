@@ -1,11 +1,11 @@
 FROM debian:buster
 
-RUN apt-get update -y \
-&&  apt-get upgrade -y \
-&&  apt-get -y install wget php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-ldap php-zip php-curl
+RUN apt update; \
+    apt install -y php7.3 php-mysqli php-fpm mariadb-client curl sendmail
 
-RUN wget http://wordpress.org/latest.tar.gz \
-&&  tar -xvf latest.tar.gz \
-&&  rm latest.tar.gz
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
+COPY ./conf /var/www/
 
-COPY ./conf/wp-config.php /var/www/html/wordpress
+EXPOSE 9000
+
+CMD ["bash", "/var/www/setup.sh"]
