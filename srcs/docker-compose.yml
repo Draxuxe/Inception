@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3'
 
 services:
   mariadb:
@@ -7,8 +7,11 @@ services:
     container_name: mariadb
     ports:
       - 3306:3306
-    env_file:
-      - ./.env
+    environment:
+      MYSQL_ROOT_PWD:   ${MYSQL_ROOT_PWD}
+      WP_DATABASE_NAME: ${MYSQL_DB}
+      WP_DATABASE_USR:  ${MYSQL_USR}
+      WP_DATABASE_PWD:  ${MYSQL_USR_PWD}
     restart: always
     networks:
       - inception
@@ -32,8 +35,19 @@ services:
     ports:
       - 9000:9000
     restart: always
-    env_file:
-      - ./.env
+    environment:
+      MYSQL_HOST:       ${MYSQL_HOST}
+      WP_DATABASE_NAME: ${MYSQL_DB}
+      WP_DATABASE_USR:  ${MYSQL_USR}
+      WP_DATABASE_PWD:  ${MYSQL_USR_PWD}
+      DOMAIN_NAME:      ${DOMAIN_NAME}
+      WP_TITLE:         ${TITLE}
+      WP_ADMIN_USR:     ${MYSQL_ROOT_USR}
+      WP_ADMIN_PWD:     ${MYSQL_ROOT_PWD}
+      WP_ADMIN_EMAIL:   ${ROOT_EMAIL}
+      WP_USR:           ${MYSQL_USR}
+      WP_PWD:           ${MYSQL_USR_PWD}
+      WP_EMAIL:         ${USR_EMAIL}
     volumes:
       - wp_vol:/var/www/html
 

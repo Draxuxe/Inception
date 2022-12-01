@@ -1,11 +1,16 @@
-FROM debian:buster
+FROM alpine:3.13
 
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y nginx openssl
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt  -subj "/C=FR/ST=AURA/L=Lyon/O=42Lyon/CN="
+RUN	apk update && apk upgrade && apk add --no-cache \
+        nginx \
+        openssl
 
-COPY srcs/nginx.conf /etc/nginx/conf.d
+RUN mkdir /etc/nginx/ssl
+RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
+        -out /etc/nginx/ssl/lfilloux.pem \
+        -keyout /etc/nginx/ssl/lfilloux.key \
+        -subj "/C=IT/ST=Rome/L=Rome/O=42 School/OU=lfilloux/CN=lfilloux/"
 
-EXPOSE 443
+RUN mkdir -p /run/nginx
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

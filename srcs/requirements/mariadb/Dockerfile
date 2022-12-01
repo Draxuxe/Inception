@@ -1,16 +1,9 @@
-FROM debian:buster
+FROM alpine:3.13
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y mariadb-server
+RUN	apk update && apk upgrade && apk add --no-cache \
+        mariadb \
+        mariadb-client
+        
+COPY conf/db_setup.sh /tmp/db_setup.sh
 
-COPY conf/ /
-
-ARG MYSQL_ROOT_PWD
-ARG MYSQL_USR
-ARG MYSQL_USR_PWD
-ARG MYSQL_DB
-ARG DB_HOST
-ARG MYSQL_ROOT_USR
-
-RUN sh db_setup.sh
-
-ENTRYPOINT [ "mysqld" ]
+ENTRYPOINT ["sh", "/tmp/db_setup.sh"]
