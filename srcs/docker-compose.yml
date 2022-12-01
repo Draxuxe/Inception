@@ -1,6 +1,19 @@
 version: '3'
 
 services:
+  mariadb:
+    build: ./requirements/mariadb
+    image: mariadb
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      - ./.env
+    restart: always
+    networks:
+      - inception
+    volumes:
+      - "mdb_vol:/var/lib/mysql"
   nginx:
     build: ./requirements/nginx
     image: nginx
