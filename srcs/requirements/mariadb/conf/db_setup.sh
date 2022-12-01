@@ -1,38 +1,43 @@
 #!/bin/sh
 
-if [ ! -d "/run/mysqld" ]; then
-	mkdir -p /run/mysqld
-	chown -R mysql:mysql /run/mysqld
+mysql_install_db
+
+/etc/init.d/mysql start
+
+#Check if the database exists
+
+if [ -d "/var/lib/mysql/$MYSQL_DB" ]
+then 
+
+	echo "Database already exists"
+else
+
+# Set root option so that connexion without root password is not possible
+
+mysql_secure_installation << _EOF_
+Y
+root4life
+root4life
+Y
+n
+Y
+Y
+_EOF_
+
+#Add a root user on 127.0.0.1 to allow remote connexion 
+#Flush privileges allow to your sql tables to be updated automatically when you modify it
+#mysql -uroot launch mysql command line client
+echo "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PWD'; FLUSH PRIVILEGES;" | mysql -uroot
+
+#Create database and user in the database for wordpress
+
+echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DB; GRANT ALL ON $MYSQL_DB.* TO '$MYSQL_USR'@'%' IDENTIFIED BY '$MYSQL_USR_PWD'; FLUSH PRIVILEGES;" | mysql -u root
+
+#Import database in the mysql command line
+mysql -uroot -p$MYSQL_ROOT_PWD $MYSQL_DB < /usr/local/bin/wordpress.sql
+
 fi
 
-if [ ! -d "/var/lib/mysql/mysql" ]; then
-	
-	chown -R mysql:mysql /var/lib/mysql
+/etc/init.d/mysql stop
 
-	# init database
-	mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
-
-	tfile=`mktemp`
-	if [ ! -f "$tfile" ]; then
-		return 1
-	fi
-
-	cat << EOF > $tfile
-service mysql start
-
-mysql -u root -e "CREATE USER '${MYSQL_USR}'@'%' IDENTIFIED BY '${MYSQL_PWD}';"
-mysql -u root -e "CREATE DATABASE wordpress;"
-mysql -u root wordpress  < /wordpress.sql
-mysql -u root -e "USE wordpress; GRANT ALL PRIVILEGES ON * TO '${MYSQL_USR}'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
-
-mysql -u root -e "alter user 'root'@'localhost' identified by 'password'";
-
-EOF
-	/usr/bin/mysqld --user=mysql --bootstrap < $tfile
-	rm -f $tfile
-fi
-
-sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
-sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
-
-exec /usr/bin/mysqld --user=mysql --console
+exec "$@"
