@@ -6,7 +6,7 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/12/01 14:04:47 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/12/01 14:22:41 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ down:
 	@docker-compose -f srcs/docker-compose.yml down
 
 clean: down
-#	@docker rmi nginx
-	@docker rmi mariadb
-#	@docker rmi wordpress
+	@docker rmi nginx
+#	@docker rmi mariadb
+	@docker rmi wordpress
 	@docker volume rm srcs_mdb_vol
 	@docker volume rm srcs_wp_vol
 	@docker system prune -f
