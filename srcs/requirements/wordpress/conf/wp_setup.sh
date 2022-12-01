@@ -1,33 +1,16 @@
-#!/bin/sh
+mkdir /var/www
+wget https://wordpress.org/latest.tar.gz
+tar xvf latest.tar.gz
+rm -rf latetest.tar.gz
+mv wordpress/ /var/www/app
 
-sleep 5
+mv www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-curl				-O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod				+x wp-cli.phar
-mv					-f wp-cli.phar /usr/local/bin/wp
+cd /var/www/app
+sed -i "s/username_here/${MYSQL_USR}/g" wp-config-sample.php
+sed -i "s/password_here/${MYSQL_USR_PWD}/g" wp-config-sample.php
+sed -i "s/localhost/mariadb/g" wp-config-sample.php
+sed -i "s/database_name_here/${MYSQL_DB}/g" wp-config-sample.php
+mv wp-config-sample.php wp-config.php
 
-/usr/local/bin/wp	--info
-/usr/local/bin/wp	core download --allow-root --path="/var/www/html"
-
-rm					-f /var/www/html/wp-config.php
-cp					./wp-config.php /var/www/html/wp-config.php
-
-/usr/local/bin/wp	core install \
-					--allow-root \
-					--path="/var/www/html" \
-					--url=${DOMAIN_NAME} \
-					--title="First Wordpress!" \
-					--admin_user=${MYSQL_ROOT_USR} \
-					--admin_password=${MYSQL_ROOT_PWD} \
-					--admin_email=${ROOT_EMAIL} \
-					--skip-email
-
-/usr/local/bin/wp	user create \
-					--allow-root \
-					--path="/var/www/html" \
-					${MYSQL_USR} \
-					${USR_EMAIL} \
-					--role=author \
-					--user_pass=${MYSQL_USR_PWD}
-
-exec	php-fpm7 -F
+service php7.3-fpm start

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
   mariadb:
@@ -7,37 +7,33 @@ services:
     container_name: mariadb
     ports:
       - 3306:3306
-    restart: unless-stopped
+    restart: always
     networks:
       - inception
     env_file:
       - ./.env
     volumes:
-      - mdb_vol:/var/lib/mysql
-  wordpress:
-    build: ./requirements/wordpress
-    image: wordpress
-    container_name: wordpress
-    ports:
-      - 9000:9000
-    restart: unless-stopped
-    env_file:
-      - ./.env
-    depends_on:
-      - mariadb
-    volumes:
-      - wp_vol:/var/www/html
+      - "mdb_vol:/var/lib/mysql"
   nginx:
     build: ./requirements/nginx
     image: nginx
     container_name: nginx
     ports: 
       - 443:443
-    restart: unless-stopped
+    restart: always
     networks:
       - inception
-    depends_on:
-      - wordpress
+    volumes:
+      - wp_vol:/var/www/html
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    container_name: wordpress
+    ports:
+      - 9000:9000
+    restart: always
+    env_file:
+      - ./.env
     volumes:
       - wp_vol:/var/www/html
 
