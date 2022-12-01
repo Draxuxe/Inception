@@ -2,18 +2,13 @@ version: '3.3'
 
 services:
   mariadb:
-    build:
-      context: ./requirements/mariadb
-      args:
-        - MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD}
-        - MYSQL_USR=${MYSQL_USR}
-        - MYSQL_USR_PWD=${MYSQL_USR_PWD}
-        - MYSQL_DB=${MYSQL_DB}
-        - MYSQL_ROOT_USR=${MYSQL_ROOT_USR}
+    build: ./requirements/mariadb
     image: mariadb
     container_name: mariadb
     ports:
       - 3306:3306
+    env_file:
+      - ./.env
     restart: always
     networks:
       - inception
