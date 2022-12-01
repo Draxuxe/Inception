@@ -8,7 +8,6 @@ mysql_install_db
 
 if [ -d "/var/lib/mysql/$MYSQL_DB" ]
 then 
-
 	echo "Database already exists"
 else
 
