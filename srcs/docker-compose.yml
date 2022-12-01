@@ -1,19 +1,6 @@
 version: '3'
 
 services:
-  mariadb:
-    build: ./requirements/mariadb
-    image: mariadb
-    container_name: mariadb
-    ports:
-      - 3306:3306
-    environment:
-      - ./.env
-    restart: always
-    networks:
-      - inception
-    volumes:
-      - "mdb_vol:/var/lib/mysql"
   nginx:
     build: ./requirements/nginx
     image: nginx
@@ -23,17 +10,6 @@ services:
     restart: always
     networks:
       - inception
-    volumes:
-      - wp_vol:/var/www/html
-  wordpress:
-    build: ./requirements/wordpress
-    image: wordpress
-    container_name: wordpress
-    ports:
-      - 9000:9000
-    restart: always
-    environment:
-      - ./.env
     volumes:
       - wp_vol:/var/www/html
 
