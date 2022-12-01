@@ -10,7 +10,6 @@ services:
         - MYSQL_USR_PWD=${MYSQL_USR_PWD}
         - MYSQL_DB=${MYSQL_DB}
         - MYSQL_ROOT_USR=${MYSQL_ROOT_USR}
-        - MYSQL_USR_PWD=${MYSQL_USR_PWD}
     image: mariadb
     container_name: mariadb
     ports:
