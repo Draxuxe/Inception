@@ -8,7 +8,7 @@ services:
     ports: 
       - 443:443
     restart: always
-    depends-on:
+    depend-on:
       - wordpress
     networks:
       - inception
