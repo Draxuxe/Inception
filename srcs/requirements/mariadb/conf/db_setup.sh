@@ -18,21 +18,15 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 	fi
 
 	cat << EOF > $tfile
-USE mysql;
-FLUSH PRIVILEGES;
+service mysql start
 
-DELETE FROM	mysql.user WHERE User='';
-DROP DATABASE test;
-DELETE FROM mysql.db WHERE Db='test';
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+mysql -u root -e "CREATE USER '${MYSQL_USR}'@'%' IDENTIFIED BY '${MYSQL_PWD}';"
+mysql -u root -e "CREATE DATABASE wordpress;"
+mysql -u root wordpress  < /wordpress.sql
+mysql -u root -e "USE wordpress; GRANT ALL PRIVILEGES ON * TO '${MYSQL_USR}'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PWD';
+mysql -u root -e "alter user 'root'@'localhost' identified by 'password'";
 
-CREATE DATABASE $MYSQL_DB CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER '$MYSQL_USR'@'%' IDENTIFIED by '$MYSQL_USR_PWD';
-GRANT ALL PRIVILEGES ON $MYSQL_DB.* TO '$MYSQL_USR'@'%';
-
-FLUSH PRIVILEGES;
 EOF
 	/usr/bin/mysqld --user=mysql --bootstrap < $tfile
 	rm -f $tfile
