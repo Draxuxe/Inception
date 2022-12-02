@@ -1,5 +1,4 @@
 # !/bin/bash
-export $(cat /home/lfilloux/Documents/Inception/srcs/.env | egrep -v "(^#.*|^$)" | xargs)
 
 sed -i "s/{MYSQL_ROOT}/${MYSQL_ROOT}/g" start.sh
 sed -i "s/{MYSQL_ROOT_PWD}/${MYSQL_ROOT_PWD}/g" start.sh
