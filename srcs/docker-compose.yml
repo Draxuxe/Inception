@@ -12,19 +12,6 @@ services:
       - wordpress
     networks:
       - inception
-    volumes:
-      - wp_vol:/var/www/html
-  wordpress:
-    build: ./requirements/wordpress
-    image: wordpress
-    container_name: wordpress
-    ports:
-      - 9000:9000
-    restart: always
-    environment:
-      - ./.env
-    volumes:
-      - wp_vol:/var/www/html
 
 networks:
   inception:
