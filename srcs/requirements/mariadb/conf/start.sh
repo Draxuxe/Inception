@@ -5,7 +5,6 @@ CREATE USER lfilloux@'%' IDENTIFIED BY 'pass';
 GRANT ALL PRIVILEGES ON wordpress.* TO lfilloux@'%';
 FLUSH PRIVILEGES;
 
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('test');
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'test';
+SET PASSWORD FOR root@localhost = PASSWORD("test");
 
 EOF
