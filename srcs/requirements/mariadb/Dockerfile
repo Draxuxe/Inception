@@ -8,11 +8,9 @@ COPY ./conf/ .
 
 RUN cp ./50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN chmod +x ./db_setup.sh	\
-&&  chmod +x ./start.sh
+RUN chmod +x ./start.sh
 
-RUN sh ./db_setup.sh \
-&&  sh ./start.sh
+RUN sh ./start.sh
 
 RUN service mysql start	\
 &&  mysql < setup.sql
