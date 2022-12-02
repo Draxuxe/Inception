@@ -1,39 +1,21 @@
-#!/bin/sh
+# !/bin/bash
 
-# wait for mysql
-while ! mariadb -h$MYSQL_HOST -u$MYSQL_USR -p$MYSQL_USR_PWD $MYSQL_DB &>/dev/null; do
-    sleep 3
-done
+wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+mv wp-cli.phar /usr/local/bin/wp-cli
 
-if [ ! -f "/var/www/html/index.html" ]; then
+rm -f /var/www/wordpress/wp-config-sample.php
+mv ./wp-config.php /var/www/wordpress/
 
-    # static website
-    mv /tmp/index.html /var/www/html/index.html
+cd /var/www/wordpress
+wp-cli core download --allow-root
+wp-cli core install --url='lfilloux.42.fr' --title='Inception' --admin_user='louis' --admin_password='root' --admin_email='louis.42@student.fr' --allow-root
+cd /
 
-    # adminer
-    wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1-mysql-en.php -O /var/www/html/adminer.php &> /dev/null
-    wget https://raw.githubusercontent.com/Niyko/Hydra-Dark-Theme-for-Adminer/master/adminer.css -O /var/www/html/adminer.css &> /dev/null
+mv ./www.conf /etc/php/7.3/fpm/pool.d/www.conf
+rm -f .env
 
-    wp core download --allow-root
-    wp config create --dbname=$MYSQL_DB --dbuser=$MYSQL_USR --dbpass=$MYSQL_USR_PWD --dbhost=$MYSQL_HOST --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
-    wp core install --url=$DOMAIN_NAME/wordpress --title=$TITLE --admin_user=$MYSQL_ROOT_USR --admin_password=$MYSQL_ROOT_PWD --admin_email=$ROOT_EMAIL --skip-email --allow-root
-    wp user create $MYSQL_USR $USR_EMAIL --role=author --user_pass=$MYSQL_USR_PWD --allow-root
-    wp theme install inspiro --activate --allow-root
+service php7.3-fpm start
+service php7.3-fpm stop
 
-    # enable redis cache
-    sed -i "40i define( 'WP_REDIS_HOST', 'redis' );"      wp-config.php
-    sed -i "41i define( 'WP_REDIS_PORT', 6379 );"               wp-config.php
-    #sed -i "42i define( 'WP_REDIS_PASSWORD', '$REDIS_PWD' );"   wp-config.php
-    sed -i "42i define( 'WP_REDIS_TIMEOUT', 1 );"               wp-config.php
-    sed -i "43i define( 'WP_REDIS_READ_TIMEOUT', 1 );"          wp-config.php
-    sed -i "44i define( 'WP_REDIS_DATABASE', 0 );\n"            wp-config.php
-
-    wp plugin install redis-cache --activate --allow-root
-    wp plugin update --all --allow-root
-
-fi
-
-wp redis enable --allow-root
-
-echo "Wordpress started on :9000"
-/usr/sbin/php-fpm7 -F -R
+php-fpm7.3 -F -R

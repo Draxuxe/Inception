@@ -1,6 +1,6 @@
 # !/bin/bash
 cat > setup.sql << EOF
-CREATE DATABASE IF NOT EXISTS mariadb;
+CREATE DATABASE IF NOT EXISTS wordpress;
 CREATE USER lfilloux@'%' IDENTIFIED BY 'pass';
 GRANT ALL PRIVILEGES ON mariadb.* TO lfilloux@'%';
 FLUSH PRIVILEGES;
