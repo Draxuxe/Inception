@@ -12,7 +12,7 @@ RUN chmod +x ./db_setup.sh	\
 &&  chmod +x ./start.sh
 
 RUN sh ./db_setup.sh \
-&&  sh ./start.sh \
+&&  sh ./start.sh
 
 RUN service mysql start	\
 &&  mysql < setup.sql
