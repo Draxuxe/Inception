@@ -6,7 +6,7 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/12/02 10:20:59 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/12/02 10:25:58 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ clean: down
 	@docker volume rm srcs_mdb_vol
 	@docker volume rm srcs_wp_vol
 	@docker system prune -f
-	@sudo rm -rf /home/lfilloux/
+	@sudo rm -rf /home/lfilloux/data
 
 info:
 	@echo "=============================== IMAGES ==============================="
