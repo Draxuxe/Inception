@@ -6,7 +6,7 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/12/02 10:02:27 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/12/02 10:20:59 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ down:
 
 clean: down
 	@docker rmi nginx
-#	@docker rmi mariadb
+	@docker rmi mariadb
 #	@docker rmi wordpress
 	@docker volume rm srcs_mdb_vol
 	@docker volume rm srcs_wp_vol

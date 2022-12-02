@@ -1,6 +1,6 @@
-FROM alpine:3.13
+FROM debian:buster
 
-RUN	apk update && apk upgrade && apk add --no-cache \
+RUN	apt-get update && apt-get upgrade && apt-get install --no-cache \
         nginx \
         openssl
 
