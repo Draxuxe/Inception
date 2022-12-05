@@ -27,19 +27,19 @@ services:
 #      - ./.env
 #    volumes:
 #      - wp_vol:/var/www/html
-#  nginx:
-#    build: ./requirements/nginx
-#    image: nginx
-#    container_name: nginx
-#    ports: 
-#      - 443:443
-#    restart: always
+  nginx:
+    build: ./requirements/nginx
+    image: nginx
+    container_name: nginx
+    ports: 
+      - 443:443
+    restart: always
 #    depends_on:
 #      - wordpress
-#    networks:
-#      - inception
-#    volumes:
-#      - wp_vol:/var/www/html
+    networks:
+      - inception
+    volumes:
+      - wp_vol:/var/www/html
 
 networks:
   inception:
