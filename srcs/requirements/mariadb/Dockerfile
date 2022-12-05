@@ -8,8 +8,8 @@ RUN apt-get update -y && apt-get -y install \
     && mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld \
     && chmod 777 /var/run/mysqld
 
-COPY ./conf/entrypoint.sh /
+COPY ./conf/start.sh /
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/start.sh" ]
 CMD [ "mysqld_safe", "--datadir=/var/lib/mysql" ]
