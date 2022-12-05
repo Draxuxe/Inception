@@ -16,8 +16,8 @@ RUN chmod +x ./start.sh \
 
 RUN service mysql start	\
 &&  mysql < setup.sql \
-&& system mysql stop \
-&& system mysql restart
+&& service mysql stop \
+&& service mysql restart
 
 EXPOSE	3306
 
