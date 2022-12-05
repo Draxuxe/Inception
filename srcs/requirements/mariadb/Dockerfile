@@ -9,6 +9,8 @@ RUN	apt-get update -y	\
 
 COPY ./conf/ .
 
+RUN chmod +x ./start.sh
+
 EXPOSE	3306
 
 ENTRYPOINT ["./start.sh"]
