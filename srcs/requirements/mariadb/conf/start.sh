@@ -1,11 +1,11 @@
 # !/bin/bash
 cat > setup.sql << EOF
 
-CREATE DATABASE IF NOT EXISTS wordpress;
+CREATE DATABASE IF NOT EXISTS wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE USER lfilloux@'%' IDENTIFIED BY 'pass';
 GRANT ALL PRIVILEGES ON wordpress.* TO lfilloux@'%';
 FLUSH PRIVILEGES;
 
-SET PASSWORD FOR 'root'@'localhost'=PASSWORD('god');
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';
 
 EOF
