@@ -5,6 +5,8 @@ CREATE USER lfilloux@'%' IDENTIFIED BY 'pass';
 GRANT ALL PRIVILEGES ON wordpress.* TO lfilloux@'%';
 FLUSH PRIVILEGES;
 
-SET PASSWORD FOR root@'localhost' = PASSWORD('test');
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';
+
+sed -i "s/password =/password = 'god' #/" /etc/mysql/debian.cnf
 
 EOF
