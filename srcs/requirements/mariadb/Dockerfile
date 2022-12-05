@@ -19,4 +19,4 @@ RUN service mysql start	\
 
 EXPOSE	3306
 
-CMD ["mysqld_safe", "--datadir=/var/lib/mysql"]
+CMD ["mysqld_safe"]
