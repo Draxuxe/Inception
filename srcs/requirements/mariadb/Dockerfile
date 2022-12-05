@@ -11,5 +11,7 @@ RUN apt-get update -y && apt-get -y install \
 COPY ./conf/start.sh /
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
+RUN chmod +x /start.sh
+
 ENTRYPOINT [ "/start.sh" ]
 CMD [ "mysqld_safe", "--datadir=/var/lib/mysql" ]
