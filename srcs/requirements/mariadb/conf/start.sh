@@ -9,10 +9,9 @@ if [ ! -d /var/lib/mysql/wordpress ]; then
     mysql -e "CREATE DATABASE IF NOT EXISTS wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
     mysql -e "CREATE USER IF NOT EXISTS lfilloux@'%' IDENTIFIED BY 'pass';"
     mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'lfilloux'@'%' IDENTIFIED BY 'pass' WITH GRANT OPTION;"
-    mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'lfilloux'@'localhost' IDENTIFIED BY 'pass' WITH GRANT OPTION;"
     mysql -e "FLUSH PRIVILEGES;"
 
-    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';"
+    mysql -e "ALTER USER 'root'@'%' IDENTIFIED BY 'god';"
 
     sed -i "s/password =/password = god #/" /etc/mysql/debian.cnf
 
