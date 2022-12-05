@@ -17,5 +17,6 @@ RUN service mysql start	\
 
 EXPOSE	3306
 
-#connexion en root marche pas
+ENTRYPOINT ["./start.sh"]
+
 CMD ["mysqld_safe"]

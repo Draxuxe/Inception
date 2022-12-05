@@ -1,12 +1,25 @@
-# !/bin/bash
-cat > setup.sql << EOF
-CREATE DATABASE IF NOT EXISTS wordpress;
-CREATE USER lfilloux@'%' IDENTIFIED BY 'pass';
-GRANT ALL PRIVILEGES ON wordpress.* TO lfilloux@'%';
-FLUSH PRIVILEGES;
+#!/bin/bash
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';
+if [ ! -d /var/lib/mysql/wordpress ]; then
 
-sed -i "s/password =/password = 'god' #/" /etc/mysql/debian.cnf
+    mysql_install_db --datadir /var/lib/mysql
+    service mysql start
+    sleep 3
 
-EOF
+    mysql -e "CREATE DATABASE IF NOT EXISTS wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+    mysql -e "CREATE USER IF NOT EXISTS lfilloux@'%' IDENTIFIED BY 'pass';"
+    mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'lfilloux'@'%' IDENTIFIED BY 'pass' WITH GRANT OPTION;"
+    mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'lfilloux'@'localhost' IDENTIFIED BY 'pass' WITH GRANT OPTION;"
+    mysql -e "FLUSH PRIVILEGES;"
+
+    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';"
+
+    sed -i "s/password =/password = gpd #/" /etc/mysql/debian.cnf
+
+    service mysql stop
+    echo "Database setup"
+else
+    echo "Database already setup"
+fi
+
+exec "$@"
