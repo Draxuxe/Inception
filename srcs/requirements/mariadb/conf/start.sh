@@ -6,6 +6,6 @@ CREATE USER lfilloux@'%' IDENTIFIED BY 'pass';
 GRANT ALL PRIVILEGES ON wordpress.* TO lfilloux@'%';
 FLUSH PRIVILEGES;
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';
+ALTER USER 'root'@'%' IDENTIFIED BY 'god';
 
 EOF
