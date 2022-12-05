@@ -5,7 +5,7 @@ RUN	apt-get update -y	\
 &&	apt-get install -y mariadb-server \
 &&  rm -rf /var/lib/apt/lists/* \
 &&  mkdir -p /run/mysqld \
-&&  chown -R mysql:mysql /var/lib/mysql \
+&&  chown -R mysql:mysql /var/run/mysqld \
 &&  chmod 777 /var/run/mysqld
 
 COPY ./conf/start.sh /
