@@ -7,6 +7,4 @@ FLUSH PRIVILEGES;
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';
 
-service mysql restart
-
 EOF
