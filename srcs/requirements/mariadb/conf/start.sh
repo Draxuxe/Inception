@@ -14,7 +14,7 @@ if [ ! -d /var/lib/mysql/wordpress ]; then
 
     mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';"
 
-    sed -i "s/password =/password = gpd #/" /etc/mysql/debian.cnf
+    sed -i "s/password =/password = god #/" /etc/mysql/debian.cnf
 
     service mysql stop
     echo "Database setup"
