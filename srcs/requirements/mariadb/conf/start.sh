@@ -1,20 +1,20 @@
 #!/bin/bash
 
-if [ ! -d /var/lib/mysql/${MYSQL_DATABASE} ]; then
+if [ ! -d /var/lib/mysql/mariadb ]; then
 
     mysql_install_db --datadir /var/lib/mysql
     service mysql start
     sleep 3
 
-    mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE} DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
-    mysql -e "CREATE USER IF NOT EXISTS ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-    mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}' WITH GRANT OPTION;"
-    mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}' WITH GRANT OPTION;"
+    mysql -e "CREATE DATABASE IF NOT EXISTS mariadb DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+    mysql -e "CREATE USER IF NOT EXISTS lfilloux@'%' IDENTIFIED BY 'pass';"
+    mysql -e "GRANT ALL PRIVILEGES ON mariadb.* TO 'lfilloux'@'%' IDENTIFIED BY 'pass' WITH GRANT OPTION;"
+    mysql -e "GRANT ALL PRIVILEGES ON mariadb.* TO 'lfilloux'@'localhost' IDENTIFIED BY 'pass' WITH GRANT OPTION;"
     mysql -e "FLUSH PRIVILEGES;"
 
-    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';"
 
-    sed -i "s/password =/password = ${MYSQL_ROOT_PASSWORD} #/" /etc/mysql/debian.cnf
+    sed -i "s/password =/password = god #/" /etc/mysql/debian.cnf
 
     service mysql stop
     echo "Database setup"
