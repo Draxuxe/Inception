@@ -26,4 +26,4 @@ WORKDIR /var/www/wordpress
 
 ENTRYPOINT [ "/wp_setup.sh" ]
 
-CMD [ "/usr/sbin/php-fpm7.3", "--nodaemonize" ]
+CMD [ "/usr/sbin/php-fpm7.3"]
