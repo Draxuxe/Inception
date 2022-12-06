@@ -1,5 +1,10 @@
 #!/bin/bash
 
+while ! mariadb --host=mariadb --user=louis --password=pass wordpress &> /dev/null; do
+        echo "Waiting on mariadb config"
+        sleep 2
+    done
+
 if [ ! -f wp-config.php ]; then
     echo "Installing wordpress"
     wp config create --allow-root --dbname=wordpress --dbuser=louis --dbpass=pass --dbhost=mariadb:3306 --prompt=pass --quiet
