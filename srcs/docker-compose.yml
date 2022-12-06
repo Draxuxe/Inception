@@ -26,7 +26,7 @@ services:
     environment:
       - ./.env
     volumes:
-      - wp_vol:/var/www/html
+      - wp_vol:/var/www/wordpress
   nginx:
     build: ./requirements/nginx
     image: nginx
@@ -39,7 +39,7 @@ services:
     networks:
       - inception
     volumes:
-      - wp_vol:/var/www/html
+      - wp_vol:/var/www/wordpress
 
 networks:
   inception:
