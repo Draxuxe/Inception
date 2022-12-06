@@ -1,19 +1,24 @@
 FROM debian:buster
 
-
-RUN	apt-get update && apt-get upgrade && apt-get -y install nginx \
-        openssl
-
-RUN mkdir /etc/nginx/ssl
-RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-        -out /etc/nginx/ssl/lfilloux.pem \
-        -keyout /etc/nginx/ssl/lfilloux.key \
-        -subj "/C=FR/ST=Rhone/L=Lyon/O=42 School/OU=lfilloux/CN=localhost"
-
-RUN mkdir -p /run/nginx
-
 EXPOSE 443
 
-COPY conf/nginx.conf /etc/nginx/sites-available/
+RUN apt-get -y update && apt-get -y install \
+    nginx \
+    openssl \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /etc/nginx/ssl \
+    && openssl req -x509 -outform pem \
+    -out /etc/nginx/ssl/ssl_chain.pem \
+    -keyout /etc/nginx/ssl/ssl_keychain.pem \
+    -newkey rsa:4096 -nodes -sha256 -days 3650 \
+    -subj '/CN=localhost' \
+    && cat /etc/nginx/ssl/ssl_chain.pem > /etc/nginx/ssl/fullchain.pem
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+COPY ./conf/nginx.conf /etc/nginx/sites-available/
+
+RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf \
+    && chmod 777 /etc/nginx/ssl/* \
+    && chmod 777 -R /var/www \
+    && chown -R www-data:www-data /var/www/
+
+CMD ["nginx", "-g", "daemon off;"]
