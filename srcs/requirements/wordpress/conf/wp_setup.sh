@@ -1,21 +1,15 @@
-# !/bin/bash
+#!/bin/bash
 
-wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
-mv wp-cli.phar /usr/local/bin/wp-cli
+if [ ! -f wp-config.php ]; then
+    echo "Installing wordpress"
+    wp config create --allow-root --dbname=wordpress --dbuser=louis --dbpass=pass --dbhost=mariadb:3306 --prompt=pass --quiet
+    wp core install --allow-root --url='lfilloux.42.fr' --title='INCEPTION' --admin_user=lfilloux --admin_password=root --admin_email=lfilloux@student.42lyon.fr --skip-email
+    wp user create --allow-root louis "louis"@randomuser.com --role='subscriber' --user_pass=pass
+    wp theme install twentytwenty --activate --allow-root
+    # wp option update comment_registration 1 --allow-root
+    echo "Wordpress installed"
+else
+    echo "Wordpress already install"
+fi
 
-rm -f /var/www/wordpress/wp-config-sample.php
-mv ./wp-config.php /var/www/wordpress/
-
-cd /var/www/wordpress
-wp-cli core download --allow-root
-wp-cli core install --url='lfilloux.42.fr' --title='Inception' --admin_user='louis' --admin_password='root' --admin_email='louis.42@student.fr' --allow-root
-cd /
-
-mv ./www.conf /etc/php/7.3/fpm/pool.d/www.conf
-rm -f .env
-
-service php7.3-fpm start
-service php7.3-fpm stop
-
-php-fpm7.3 -F -R
+exec "$@"
