@@ -20,6 +20,8 @@ RUN apt-get -y update && apt-get install -y \
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
 COPY ./conf/wp_setup.sh /
 
+RUN chmod +x wp_setup.sh
+
 WORKDIR /var/www/wordpress
 
 ENTRYPOINT [ "/wp_setup.sh" ]
