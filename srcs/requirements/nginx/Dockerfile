@@ -9,10 +9,10 @@ RUN apt-get -y update && apt-get -y install \
     && mkdir /etc/nginx/ssl \
     && openssl req -x509 -outform pem \
     -out /etc/nginx/ssl/lfilloux.pem \
-    -keyout /etc/nginx/ssl/lfilloux.pem \
+    -keyout /etc/nginx/ssl/lfilloux.key \
     -newkey rsa:4096 -nodes -sha256 -days 3650 \
     -subj '/CN=localhost' \
-    && cat /etc/nginx/ssl/ssl_chain.pem > /etc/nginx/ssl/fullchain.pem
+    && cat /etc/nginx/ssl/lfilloux.pem > /etc/nginx/ssl/fullchain.pem
 
 COPY ./conf/nginx.conf /etc/nginx/sites-available/
 
