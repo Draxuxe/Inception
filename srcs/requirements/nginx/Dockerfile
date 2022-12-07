@@ -11,8 +11,7 @@ RUN apt-get -y update && apt-get -y install \
     -out /etc/nginx/ssl/lfilloux.pem \
     -keyout /etc/nginx/ssl/lfilloux.key \
     -newkey rsa:4096 -nodes -sha256 -days 3650 \
-    -subj '/CN=localhost' \
-    && cat /etc/nginx/ssl/lfilloux.pem > /etc/nginx/ssl/fullchain.pem
+    -subj '/CN=localhost'
 
 COPY ./conf/nginx.conf /etc/nginx/sites-available/
 
