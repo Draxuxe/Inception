@@ -7,7 +7,7 @@ RUN apt-get update -y \
                        php7.3-mysql \
                        wget
 
-COPY srcs/ /
+COPY conf/ /
 
 EXPOSE 9000
 
