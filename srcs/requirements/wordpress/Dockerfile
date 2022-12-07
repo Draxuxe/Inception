@@ -2,10 +2,10 @@ FROM debian:buster
 
 RUN apt-get update -y \
 &&  apt-get install -y php \
-&&                     php-fpm \
-&&                     php-cli \
-&&                     php7.3-mysql \
-&&                     wget
+                       php-fpm \
+                       php-cli \
+                       php7.3-mysql \
+                       wget
 
 COPY srcs/ /
 
