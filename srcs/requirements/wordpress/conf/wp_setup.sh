@@ -1,20 +1,16 @@
-#!/bin/bash
+mkdir /var/www
+wget https://wordpress.org/latest.tar.gz
+tar xvf latest.tar.gz
+rm -rf latetest.tar.gz
+mv wordpress/ /var/www/app
 
-while ! mariadb --host=mariadb --user=louis --password=pass wordpress &> /dev/null; do
-        echo "Waiting on mariadb config"
-        sleep 2
-    done
+mv fpm.cnf /etc/php/7.3/fpm/pool.d/www.conf
 
-if [ ! -f wp-config.php ]; then
-    echo "Installing wordpress"
-    wp config create --allow-root --dbname=wordpress --dbuser=louis --dbpass=pass --dbhost=mariadb:3306 --prompt=pass --quiet
-    wp core install --allow-root --url='lfilloux.42.fr' --title='INCEPTION' --admin_user=lfilloux --admin_password=root --admin_email=lfilloux@student.42lyon.fr --skip-email
-    wp user create --allow-root louis "louis"@randomuser.com --role='subscriber' --user_pass=pass
-    wp theme install twentytwenty --activate --allow-root
-    # wp option update comment_registration 1 --allow-root
-    echo "Wordpress installed"
-else
-    echo "Wordpress already install"
-fi
+cd /var/www/app
+sed -i "s/username_here/lfilloux/g" wp-config-sample.php
+sed -i "s/password_here/pass/g" wp-config-sample.php
+sed -i "s/localhost/mariadb/g" wp-config-sample.php
+sed -i "s/database_name_here/wordpress/g" wp-config-sample.php
+mv wp-config-sample.php wp-config.php
 
-exec "$@"
+service php7.3-fpm start
