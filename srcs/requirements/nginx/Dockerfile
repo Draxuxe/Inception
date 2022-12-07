@@ -1,23 +1,10 @@
 FROM debian:buster
 
+RUN apt-get update -y
+RUN apt-get install -y nginx openssl
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt  -subj "/C=FR/ST=France/L=Lyon/O=42/CN=aleferra.42.fr"
+
+COPY srcs/nginx.conf /etc/nginx/conf.d
 EXPOSE 443
 
-RUN apt-get -y update && apt-get -y install \
-    nginx \
-    openssl \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir /etc/nginx/ssl \
-    && openssl req -x509 -outform pem \
-    -out /etc/nginx/ssl/lfilloux.pem \
-    -keyout /etc/nginx/ssl/lfilloux.key \
-    -newkey rsa:4096 -nodes -sha256 -days 3650 \
-    -subj '/CN=localhost'
-
-COPY ./conf/nginx.conf /etc/nginx/sites-available/
-
-RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf \
-    && chmod 777 /etc/nginx/ssl/* \
-    && chmod 777 -R /var/www \
-    && chown -R www-data:www-data /var/www/
-
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
