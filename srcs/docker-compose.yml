@@ -14,6 +14,7 @@ services:
       - ./.env
     volumes:
       - mdb_vol:/var/lib/mysql
+
   wordpress:
     build: ./requirements/wordpress
     image: wordpress
@@ -27,6 +28,7 @@ services:
       - ./.env
     volumes:
       - wp_vol:/var/www/
+
   nginx:
     build: ./requirements/nginx
     image: nginx
