@@ -8,4 +8,6 @@ EXPOSE 443
 
 COPY conf/nginx.conf /etc/nginx/conf.d
 
+RUN chown 777 /var/www/
+
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
