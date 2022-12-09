@@ -1,16 +1,11 @@
 FROM debian:buster
 
-RUN	apt-get update && apt-get upgrade && apt-get -y install nginx \
-        openssl
+RUN apt-get update -y
+RUN apt-get install -y nginx openssl
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt  -subj "/C=FR/ST=France/L=Lyon/O=42/CN=lfilloux.42.fr"
 
-RUN mkdir /etc/nginx/ssl
-RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-        -out /etc/nginx/ssl/lfilloux.pem \
-        -keyout /etc/nginx/ssl/lfilloux.key \
-        -subj "/C=FR/ST=Rhone/L=Lyon/O=42 School/OU=lfilloux/CN=lfilloux/"
+EXPOSE 443
 
-RUN mkdir -p /run/nginx
-
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY conf/nginx.conf /etc/nginx/conf.d
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
