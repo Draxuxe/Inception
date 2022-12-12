@@ -6,8 +6,9 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private
 
 EXPOSE 443
 
-COPY conf/nginx.conf /etc/nginx/conf.d
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-RUN chmod 777 /var/www/
+RUN chown www-data:www-data /var/www
+RUN chmod 744 /var/www 
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
