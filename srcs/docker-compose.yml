@@ -36,8 +36,6 @@ services:
     ports: 
       - 443:443
     restart: always
-    depends_on:
-      - wordpress
     networks:
       - inception
     volumes:
