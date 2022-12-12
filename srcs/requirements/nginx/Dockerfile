@@ -11,4 +11,6 @@ COPY ./conf/nginx.conf       /etc/nginx/conf.d
 
 EXPOSE 443
 
+RUN chown -R nginx:nginx /var/www
+
 CMD ["nginx", "-g", "daemon off;"]
