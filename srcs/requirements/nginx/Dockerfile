@@ -1,8 +1,7 @@
 FROM debian:buster
 
 RUN apt-get update \
-&&  apt-get install -y nginx openssl \
-&&  mkdir -p /var/www
+&&  apt-get install -y nginx openssl
 
 RUN	openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
 	-subj "/C=FR/ST=France/L=Lyon/O=School42/CN=lfilloux.42.fr" \
