@@ -8,3 +8,8 @@ FLUSH PRIVILEGES;
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'god';
 
 EOF
+
+mysql < setup.sql
+service mysql start
+
+exec $@
