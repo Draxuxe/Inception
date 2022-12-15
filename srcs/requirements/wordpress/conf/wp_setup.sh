@@ -7,6 +7,7 @@ mv wordpress/ /var/www/html
 mv fpm.cnf /etc/php/7.3/fpm/pool.d/www.conf
 
 cd /var/www/html
+
 sed -i "s/username_here/${MYSQL_USR}/g" wp-config-sample.php
 sed -i "s/password_here/${MYSQL_USR_PWD}/g" wp-config-sample.php
 sed -i "s/localhost/${MYSQL_HOST}/g" wp-config-sample.php

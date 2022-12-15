@@ -5,6 +5,8 @@ RUN apt-get update -y \
 
 COPY conf/ /
 
+RUN chmod +x /entry.sh
+
 EXPOSE 9000
 
 ENTRYPOINT [ "sh", "entry.sh"]
