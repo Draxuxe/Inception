@@ -10,8 +10,7 @@ services:
     restart: always
     networks:
       - inception
-    env_file:
-      - ./.env
+    env_file: .env
     volumes:
       - mdb_vol:/var/lib/mysql
 
@@ -26,8 +25,7 @@ services:
       - mariadb
     networks:
       - inception
-    environment:
-      - ./.env
+    env_file: .env
     volumes:
       - wp_vol:/var/www/
 
