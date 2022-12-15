@@ -8,8 +8,3 @@ FLUSH PRIVILEGES;
 ALTER USER '${MYSQL_ROOT_USR}'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PWD}';
 
 EOF
-
-mysql < setup.sql
-service mysql start
-
-exec $@

@@ -9,12 +9,14 @@ RUN	apt-get update -y	\
 &&  chmod 777 /var/run/mysqld
 
 COPY ./conf/start.sh /
+COPY ./conf/entry.sh /
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 RUN chmod +x ./start.sh
+RUN chmod +x ./entry.sh
 
 EXPOSE	3306
 
-ENTRYPOINT ["sh", "start.sh"]
+ENTRYPOINT ["sh", "entry.sh"]
 
 CMD ["mysqld_safe"]
