@@ -11,7 +11,7 @@ cd /var/www/html/wordpress
 
 sed -i "s/username_here/${MYSQL_USR}/g" wp-config-sample.php
 sed -i "s/password_here/${MYSQL_USR_PWD}/g" wp-config-sample.php
-sed -i "s/localhost/${MYSQL_HOST}/g" wp-config-sample.php
+sed -i "s/localhost/${DB_HOST}/g" wp-config-sample.php
 sed -i "s/database_name_here/${MYSQL_DB}/g" wp-config-sample.php
 mv wp-config-sample.php wp-config.php
 
