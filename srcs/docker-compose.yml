@@ -11,7 +11,11 @@ services:
     networks:
       - inception
     environment:
-      - .env
+      - MYSQL_ROOT_USR=lfilloux
+      - MYSQL_ROOT_PWD=root
+      - MYSQL_USR=louis
+      - MYSQL_USR_PWD=pass
+      - MYSQL_DB=wordpress
     volumes:
       - mdb_vol:/var/lib/mysql
 
@@ -27,7 +31,10 @@ services:
     networks:
       - inception
     environment:
-      - .env
+      - MYSQL_USR=louis
+      - MYSQL_USR_PWD=pass
+      - MYSQL_HOST=mariadb
+      - MYSQL_DB=wordpress
     volumes:
       - wp_vol:/var/www/
 
