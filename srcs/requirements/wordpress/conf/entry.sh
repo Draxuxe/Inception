@@ -1,4 +1,4 @@
-if [ ! -d "/var/www/html" ];then
+if [ ! -d "/var/www/app" ];then
 	sh wp_setup.sh
 fi
 exec $@
