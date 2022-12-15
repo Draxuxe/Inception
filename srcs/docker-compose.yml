@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
   mariadb:
@@ -10,12 +10,7 @@ services:
     restart: unless-stopped
     networks:
       - inception
-    environment:
-      - MYSQL_ROOT_USR=lfilloux
-      - MYSQL_ROOT_PWD=root
-      - MYSQL_USR=louis
-      - MYSQL_USR_PWD=pass
-      - MYSQL_DB=wordpress
+    env_file: .env
     volumes:
       - mdb_vol:/var/lib/mysql
 
@@ -30,11 +25,7 @@ services:
       - mariadb
     networks:
       - inception
-    environment:
-      - MYSQL_USR=louis
-      - MYSQL_USR_PWD=pass
-      - MYSQL_HOST=mariadb
-      - MYSQL_DB=wordpress
+    env_file: .env
     volumes:
       - wp_vol:/var/www/
 
