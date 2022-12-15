@@ -5,8 +5,10 @@ RUN apt-get update -y \
 
 COPY conf/ /
 
+RUN chmod +x entrypoint.sh
+
 EXPOSE 9000
 
-ENTRYPOINT [ "sh", "entry.sh"]
+ENTRYPOINT [ "sh", "entrypoint.sh"]
 
 CMD [ "./usr/sbin/php-fpm7.3", "-F"]
