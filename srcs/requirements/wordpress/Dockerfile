@@ -5,8 +5,10 @@ RUN apt-get update -y \
 
 COPY conf/ /
 
+RUN chmod +x entrypoint.sh
+
 EXPOSE 9000
 
-RUN sh wp_setup.sh
+ENTRYPOINT [ "sh", "entrypoint.sh"]
 
-ENTRYPOINT [ "./usr/sbin/php-fpm7.3", "-F"]
+CMD [ "./usr/sbin/php-fpm7.3", "-F"]
