@@ -12,8 +12,6 @@ COPY ./conf/start.sh /
 COPY ./conf/entry.sh /
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN service mysql start
-
 EXPOSE	3306
 
 ENTRYPOINT ["sh", "entry.sh"]
