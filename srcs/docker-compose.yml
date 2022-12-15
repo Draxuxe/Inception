@@ -7,7 +7,7 @@ services:
     build: ./requirements/mariadb
     ports:
       - 3306:3306
-    restart: unless-stopped
+    restart: always
     networks:
       - inception
     env_file: .env
@@ -20,7 +20,7 @@ services:
     build: ./requirements/wordpress
     ports:
       - 9000:9000
-    restart: unless-stopped
+    restart: always
     depends_on:
       - mariadb
     networks:
@@ -35,7 +35,7 @@ services:
     build: ./requirements/nginx
     ports: 
       - 443:443
-    restart: unless-stopped
+    restart: always
     depends_on:
       - wordpress
     networks:
