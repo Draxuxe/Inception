@@ -16,8 +16,12 @@ RUN chmod +x entrypoint.sh
 
 RUN service mysql start
 
-EXPOSE	3306
+RUN chmod +x ./start.sh \
+&&  sh ./start.sh
 
-ENTRYPOINT ["sh", "entrypoint.sh"]
+RUN service mysql start	\
+&&  mysql < setup.sql
+
+EXPOSE	3306
 
 CMD ["mysqld_safe"]
