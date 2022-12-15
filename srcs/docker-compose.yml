@@ -11,7 +11,7 @@ services:
     networks:
       - inception
     environment:
-      - ./.env
+      - .env
     volumes:
       - mdb_vol:/var/lib/mysql
 
@@ -27,7 +27,7 @@ services:
     networks:
       - inception
     environment:
-      - ./.env
+      - .env
     volumes:
       - wp_vol:/var/www/
 
