@@ -1,3 +1,3 @@
-sh start.sh
 mysql < setup.sql
+sh start.sh
 exec $@
