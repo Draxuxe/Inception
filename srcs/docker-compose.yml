@@ -7,10 +7,11 @@ services:
     build: ./requirements/mariadb
     ports:
       - 3306:3306
-    restart: always
+    restart: unless-stopped
     networks:
       - inception
-    env_file: .env
+    environment:
+      - ./.env
     volumes:
       - mdb_vol:/var/lib/mysql
 
@@ -20,12 +21,13 @@ services:
     build: ./requirements/wordpress
     ports:
       - 9000:9000
-    restart: always
+    restart: unless-stopped
     depends_on:
       - mariadb
     networks:
       - inception
-    env_file: .env
+    environment:
+      - ./.env
     volumes:
       - wp_vol:/var/www/
 
@@ -35,7 +37,7 @@ services:
     build: ./requirements/nginx
     ports: 
       - 443:443
-    restart: always
+    restart: unless-stopped
     depends_on:
       - wordpress
     networks:
