@@ -7,6 +7,6 @@ COPY conf/ /
 
 EXPOSE 9000
 
-RUN sh wp_setup.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 
-ENTRYPOINT [ "./usr/sbin/php-fpm7.3", "-F"]
+CMD [ "/usr/sbin/php-fpm7.3", "-F"]
