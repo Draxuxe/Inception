@@ -1,27 +1,13 @@
 FROM debian:buster
 
-RUN apt-get -y update && apt-get install -y \
-    wget \
-    mariadb-client \
-    php7.3 \
-    php-fpm \
-    php-mysql \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /run/php/ && mkdir -p /var/www/wordpress \
-    && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-    && php wp-cli.phar --info \
-    && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp \
-    && wp core download --allow-root --path=/var/www/wordpress \
-    && chown www-data:www-data -R /var/www/wordpress \
-    && chmod -R 755 /var/www/wordpress
+RUN apt-get update -y \
+	&& apt-get install -y php php-fpm php-cli php7.3-mysql wget
 
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
-COPY ./conf/wp_setup.sh /
-
-WORKDIR /var/www/app
+COPY conf/ /
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 9000
 
-ENTRYPOINT ["sh", "/wp_setup.sh"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
 
-CMD [ "/usr/sbin/php-fpm7.3", "-F"]
+CMD ["./usr/sbin/php-fpm7.3", "-F"]
