@@ -11,12 +11,8 @@ RUN	apt-get update -y	\
 COPY ./conf/start.sh /
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN chmod +x ./start.sh \
-&&  sh ./start.sh
-
-RUN service mysql start	\
-&&  mysql < setup.sql
-
 EXPOSE	3306
+
+ENTRYPOINT ["sh", "start.sh"]
 
 CMD ["mysqld_safe"]
