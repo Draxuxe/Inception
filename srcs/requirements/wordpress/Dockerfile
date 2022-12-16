@@ -20,8 +20,10 @@ COPY ./conf/wp_setup.sh /
 
 WORKDIR /var/www/app
 
+RUN chmod +X wp_setup.sh
+
 EXPOSE 9000
 
-ENTRYPOINT [ "/wp_setup.sh" ]
+ENTRYPOINT ["/wp_setup.sh"]
 
 CMD [ "/usr/sbin/php-fpm7.3", "-F"]
