@@ -1,73 +1,67 @@
-version: '3.7'
+version: "3.7"
+
 
 services:
   mariadb:
     image: mariadb
     container_name: mariadb
-    build: ./requirements/mariadb
+    build: ./requierements/mariadb
+    volumes:
+      - database_vol:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - inception
     ports:
       - 3306:3306
     restart: always
-    networks:
-      - inception
-    environment:
-      - MYSQL_DB=$MYSQL_DB
-      - MYSQL_USR=$MYSQL_USR
-      - MYSQL_USR_PWD=$MYSQL_USR_PWD
-      - MYSQL_ROOT_USR=$MYSQL_ROOT_USR
-      - MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD
-    volumes:
-      - mdb_vol:/var/lib/mysql
 
   wordpress:
-    image: wordpress
     container_name: wordpress
-    build: ./requirements/wordpress
-    ports:
-      - 9000:9000
-    restart: always
+    build: ./requierements/wordpress
+    image: wordpress
     depends_on:
       - mariadb
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
     networks:
       - inception
-    environment:
-      - MYSQL_DB=$MYSQL_DB
-      - MYSQL_USR=$MYSQL_USR
-      - MYSQL_USR_PWD=$MYSQL_USR_PWD
-      - MYSQL_HOST=$MYSQL_HOST
-      - MYSQL_ROOT_USR=$MYSQL_ROOT_USR
-      - MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD
     volumes:
-      - wp_vol:/var/www/
+      - wordpress_vol:/var/www/
+    restart: always
 
   nginx:
-    image: nginx
     container_name: nginx
-    build: ./requirements/nginx
-    ports: 
-      - 443:443
+    image: nginx
     restart: always
+    build: requierements/nginx
+    volumes:
+      - wordpress_vol:/var/www/
     depends_on:
       - wordpress
+    env_file:
+      - .env
+    ports:
+      - "443:443"
     networks:
       - inception
-    volumes:
-      - wp_vol:/var/www/
 
 networks:
   inception:
     driver: bridge
 
 volumes:
-  mdb_vol:
+  wordpress_vol:
     driver: local
     driver_opts:
       type: none
-      o: bind
-      device: /home/lfilloux/data/mariadb
-  wp_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
       device: /home/lfilloux/data/wordpress
+      o: bind
+  database_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/lfilloux/data/database
+      o: bind
