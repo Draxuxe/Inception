@@ -11,11 +11,11 @@ services:
     networks:
       - inception
     environment:
-      - MYSQL_DB=${MYSQL_DB}
-      - MYSQL_USR=${MYSQL_USR}
-      - MYSQL_USR_PWD=${MYSQL_USR_PWD}
-      - MYSQL_ROOT_USR=${MYSQL_ROOT_USR}
-      - MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD}
+      - MYSQL_DB=$MYSQL_DB
+      - MYSQL_USR=$MYSQL_USR
+      - MYSQL_USR_PWD=$MYSQL_USR_PWD
+      - MYSQL_ROOT_USR=$MYSQL_ROOT_USR
+      - MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD
     volumes:
       - mdb_vol:/var/lib/mysql
 
@@ -31,10 +31,10 @@ services:
     networks:
       - inception
     environment:
-      - MYSQL_DB=${MYSQL_DB}
-      - MYSQL_USR=${MYSQL_USR}
-      - MYSQL_USR_PWD=${MYSQL_USR_PWD}
-      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_DB=$MYSQL_DB
+      - MYSQL_USR=$MYSQL_USR
+      - MYSQL_USR_PWD=$MYSQL_USR_PWD
+      - MYSQL_HOST=$MYSQL_HOST
     volumes:
       - wp_vol:/var/www/
 
