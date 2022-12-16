@@ -10,7 +10,12 @@ services:
     restart: always
     networks:
       - inception
-    env_file: .env
+    environment:
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_USR=${MYSQL_USR}
+      - MYSQL_USR_PWD=${MYSQL_USR_PWD}
+      - MYSQL_ROOT_USR=${MYSQL_ROOT_USR}
+      - MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD}
     volumes:
       - mdb_vol:/var/lib/mysql
 
@@ -25,7 +30,11 @@ services:
       - mariadb
     networks:
       - inception
-    env_file: .env
+    environment:
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_USR=${MYSQL_USR}
+      - MYSQL_USR_PWD=${MYSQL_USR_PWD}
+      - MYSQL_HOST=${MYSQL_HOST}
     volumes:
       - wp_vol:/var/www/
 
