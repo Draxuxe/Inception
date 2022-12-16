@@ -9,6 +9,8 @@ mysql -e "FLUSH PRIVILEGES;"
 
 mysql -e "ALTER USER '${MYSQL_ROOT_USR}'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PWD}';"
 
+sed -i "s/password =/password = ${MYSQL_ROOT_PWD} #/" /etc/mysql/debian.cnf
+
 service mysql stop
 
 exec "$@"
