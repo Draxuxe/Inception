@@ -35,6 +35,8 @@ services:
       - MYSQL_USR=$MYSQL_USR
       - MYSQL_USR_PWD=$MYSQL_USR_PWD
       - MYSQL_HOST=$MYSQL_HOST
+      - MYSQL_ROOT_USR=$MYSQL_ROOT_USR
+      - MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD
     volumes:
       - wp_vol:/var/www/
 
