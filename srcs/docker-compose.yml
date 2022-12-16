@@ -8,8 +8,12 @@ services:
     build: ./requirements/mariadb
     volumes:
       - database_vol:/var/lib/mysql
-    env_file:
-      - .env
+    environment:
+      - MYSQL_DB=$MYSQL_DB
+      - MYSQL_USR=$MYSQL_USR
+      - MYSQL_USR_PWD=$MYSQL_USR_PWD
+      - MYSQL_ROOT_USR=$MYSQL_ROOT_USR
+      - MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD
     networks:
       - inception
     ports:
@@ -24,8 +28,13 @@ services:
       - mariadb
     ports:
       - "9000:9000"
-    env_file:
-      - .env
+    environment:
+      - MYSQL_DB=$MYSQL_DB
+      - MYSQL_USR=$MYSQL_USR
+      - MYSQL_USR_PWD=$MYSQL_USR_PWD
+      - MYSQL_HOST=$MYSQL_HOST
+      - MYSQL_ROOT_USR=$MYSQL_ROOT_USR
+      - MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD
     networks:
       - inception
     volumes:
