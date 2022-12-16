@@ -1,3 +1,5 @@
+# !/bin/bash
+
 mkdir /var/www
 wget https://wordpress.org/latest.tar.gz
 tar xvf latest.tar.gz
@@ -15,3 +17,5 @@ sed -i "s/database_name_here/${MYSQL_DB}/g" wp-config-sample.php
 mv wp-config-sample.php wp-config.php
 
 service php7.3-fpm start
+
+exec "$@"
