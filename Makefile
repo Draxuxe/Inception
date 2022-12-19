@@ -6,7 +6,7 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/12/19 11:56:42 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/12/19 11:57:24 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ up:
 down:
 	@docker-compose -f srcs/docker-compose.yml down
 
-clean: down
+clean:
 	@docker stop nginx
 	@docker stop mariadb
 	@docker stop wordpress
