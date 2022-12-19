@@ -1,5 +1,5 @@
 mkdir /var/www
-mkdir -p /var/run
+mkdir -p /var/run/php/
 wget https://wordpress.org/latest.tar.gz
 tar xvf latest.tar.gz
 rm -rf latetest.tar.gz
