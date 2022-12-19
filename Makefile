@@ -6,7 +6,7 @@
 #    By: lfilloux <lfilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 11:25:58 by lfilloux          #+#    #+#              #
-#    Updated: 2022/12/16 15:14:06 by lfilloux         ###   ########.fr        #
+#    Updated: 2022/12/19 11:42:37 by lfilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,12 @@ up:
 down:
 	@docker-compose -f srcs/docker-compose.yml down
 
-clean: down
-	@docker rmi nginx
-	@docker rmi mariadb
-	@docker rmi wordpress
-	@docker volume rm srcs_database_vol
-	@docker volume rm srcs_wordpress_vol
-	@docker system prune -f
-	@sudo rm -rf /home/lfilloux/data/wordpress
-	@sudo rm -rf /home/lfilloux/data/mariadb
+clean:
+	@docker stop $(docker ps -qa);
+	@docker rm $(docker ps -qa);
+	@docker rmi -f $(docker images -qa);
+	@docker volume rm $(docker volume ls -q);
+	@docker network rm $(docker network ls -q) 2>/dev/null
 
 info:
 	@echo "=============================== IMAGES ==============================="
