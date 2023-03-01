@@ -1,13 +1,13 @@
 NAME= inception
 
 all:
-	@mkdir -p /home/aleferra/data/mariadb
-	@mkdir -p /home/aleferra/data/wordpress
+	@mkdir -p /home/lfilloux/data/mariadb
+	@mkdir -p /home/lfilloux/data/wordpress
 	@docker-compose -f srcs/docker-compose.yml up --build -d
 
 up:
-	@mkdir -p /home/aleferra/data/mariadb
-	@mkdir -p /home/aleferra/data/wordpress
+	@mkdir -p /home/lfilloux/data/mariadb
+	@mkdir -p /home/lfilloux/data/wordpress
 	@docker-compose -f srcs/docker-compose.yml up -d
 
 down:
@@ -27,8 +27,8 @@ clean:
 	@docker volume rm srcs_wordpress_vol
 	@docker network rm srcs_inception
 	@docker system prune -f
-	@sudo rm -rf /home/aleferra/data/wordpress
-	@sudo rm -rf /home/aleferra/data/mariadb
+	@sudo rm -rf /home/lfilloux/data/wordpress
+	@sudo rm -rf /home/lfilloux/data/mariadb
 
 info:
 	@echo "=============================== IMAGES ==============================="
