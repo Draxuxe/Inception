@@ -1,0 +1,71 @@
+version: "3.7"
+
+
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    build: ./requirements/mariadb
+    volumes:
+      - mariadb_vol:/var/lib/mysql
+    environment:
+      - MYSQL_DB=$MYSQL_DB
+      - MYSQL_USR=$MYSQL_USR
+      - MYSQL_USR_PWD=$MYSQL_USR_PWD
+      - MYSQL_ROOT_USR=$MYSQL_ROOT_USR
+      - MYSQL_ROOT_PWD=$MYSQL_ROOT_PWD
+    networks:
+      - inception
+    ports:
+      - 3306:3306
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    networks:
+      - inception
+    volumes:
+      - wordpress_vol:/var/www/
+    restart: always
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: always
+    build: requirements/nginx
+    volumes:
+      - wordpress_vol:/var/www/
+    depends_on:
+      - wordpress
+    env_file:
+      - .env
+    ports:
+      - "443:443"
+    networks:
+      - inception
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  wordpress_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/lfilloux/data/wordpress
+      o: bind
+  mariadb_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/lfilloux/data/mariadb
+      o: bind
